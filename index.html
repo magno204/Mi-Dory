@@ -21,6 +21,9 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
     
+    <!-- Plotly.js para gráficos 3D -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -194,6 +197,46 @@
             border-radius: 5px;
         }
 
+        /* Estilos para gráficos 3D */
+        .grafico-container {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .grafico-3d {
+            width: 100%;
+            height: 500px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .grafico-titulo {
+            text-align: center;
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .grafico-descripcion {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .controles-grafico {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .controles-grafico button {
+            margin: 5px;
+        }
+
         /* Estilos para MathJax */
         mjx-container {
             overflow-x: auto;
@@ -330,6 +373,29 @@
 
                 <div class="respuesta">
                     ✅ Respuesta correcta: <strong>i) Opciones 1) y 4)</strong>
+                </div>
+
+                <!-- Visualización gráfica 3D -->
+                <div class="grafico-container">
+                    <div class="grafico-titulo">📊 Visualización 3D Interactiva: Tipos de Rectas en ℝ³</div>
+                    <div class="grafico-descripcion">
+                        Explora los diferentes tipos de relaciones entre rectas en el espacio tridimensional. 
+                        Puedes rotar, hacer zoom y explorar cada visualización.
+                    </div>
+                    
+                    <div class="controles-grafico">
+                        <button onclick="mostrarGrafico('coincidentes')">📍 Rectas Coincidentes</button>
+                        <button onclick="mostrarGrafico('paralelas')">⫽ Rectas Paralelas</button>
+                        <button onclick="mostrarGrafico('perpendiculares')">⊥ Rectas Perpendiculares</button>
+                        <button onclick="mostrarGrafico('secantes')">✖️ Rectas que se Cortan</button>
+                        <button onclick="mostrarGrafico('alabeadas')">🔀 Rectas Alabeadas</button>
+                    </div>
+
+                    <div id="grafico3d" class="grafico-3d"></div>
+                    
+                    <div id="explicacion-grafico" style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <strong>💡 Haz clic en un botón para ver cada tipo de recta</strong>
+                    </div>
                 </div>
             </div>
         </div>
@@ -836,6 +902,278 @@
             problema.style.transform = 'translateY(20px)';
             problema.style.transition = 'all 0.5s ease-in-out';
             observer.observe(problema);
+        });
+
+        // ==========================================
+        // FUNCIONES PARA GRÁFICOS 3D
+        // ==========================================
+
+        // Función para crear una recta en 3D dados un punto y un vector director
+        function crearRecta3D(punto, vector, color, nombre, tMin = -5, tMax = 5) {
+            const t = [];
+            const x = [];
+            const y = [];
+            const z = [];
+            
+            const steps = 100;
+            for (let i = 0; i <= steps; i++) {
+                const ti = tMin + (tMax - tMin) * i / steps;
+                t.push(ti);
+                x.push(punto[0] + vector[0] * ti);
+                y.push(punto[1] + vector[1] * ti);
+                z.push(punto[2] + vector[2] * ti);
+            }
+            
+            return {
+                type: 'scatter3d',
+                mode: 'lines',
+                x: x,
+                y: y,
+                z: z,
+                name: nombre,
+                line: {
+                    color: color,
+                    width: 6
+                }
+            };
+        }
+
+        // Función para crear un punto en 3D
+        function crearPunto3D(punto, color, nombre) {
+            return {
+                type: 'scatter3d',
+                mode: 'markers',
+                x: [punto[0]],
+                y: [punto[1]],
+                z: [punto[2]],
+                name: nombre,
+                marker: {
+                    size: 8,
+                    color: color
+                }
+            };
+        }
+
+        // Función para crear un vector desde el origen
+        function crearVector3D(vector, color, nombre) {
+            return {
+                type: 'scatter3d',
+                mode: 'lines+markers',
+                x: [0, vector[0]],
+                y: [0, vector[1]],
+                z: [0, vector[2]],
+                name: nombre,
+                line: {
+                    color: color,
+                    width: 4
+                },
+                marker: {
+                    size: [0, 8],
+                    color: color
+                }
+            };
+        }
+
+        // Configuración base para todos los gráficos
+        const layoutBase = {
+            scene: {
+                xaxis: { title: 'X', range: [-6, 6] },
+                yaxis: { title: 'Y', range: [-6, 6] },
+                zaxis: { title: 'Z', range: [-6, 6] },
+                aspectmode: 'cube',
+                camera: {
+                    eye: { x: 1.5, y: 1.5, z: 1.5 }
+                }
+            },
+            margin: { l: 0, r: 0, b: 0, t: 40 },
+            paper_bgcolor: 'rgba(240,248,255,0.3)',
+            plot_bgcolor: 'rgba(240,248,255,0.3)'
+        };
+
+        // Función principal para mostrar diferentes tipos de rectas
+        function mostrarGrafico(tipo) {
+            let data = [];
+            let titulo = '';
+            let explicacion = '';
+
+            switch(tipo) {
+                case 'coincidentes':
+                    // Dos rectas coincidentes: son la misma recta
+                    const p1 = [1, 2, 1];
+                    const v1 = [1, -1, 2];
+                    
+                    data = [
+                        crearRecta3D(p1, v1, 'rgb(255, 0, 0)', 'l₁ (Roja)', -3, 3),
+                        crearRecta3D(p1, v1, 'rgb(0, 0, 255)', 'l₂ (Azul - coincide con l₁)', -3, 3),
+                        crearPunto3D(p1, 'green', 'Punto P₁ = P₂'),
+                        crearVector3D(v1, 'purple', 'v⃗₁ = v⃗₂')
+                    ];
+                    
+                    titulo = '📍 Rectas Coincidentes';
+                    explicacion = `
+                        <strong>Rectas Coincidentes:</strong><br>
+                        Las dos rectas son <strong>la misma recta</strong>. Comparten todos sus puntos.<br><br>
+                        <strong>Condiciones:</strong><br>
+                        ✅ Vectores directores paralelos: $\\vec{v}_1 \\times \\vec{v}_2 = \\vec{0}$<br>
+                        ✅ Tienen al menos un punto en común<br><br>
+                        <strong>En este ejemplo:</strong><br>
+                        • Punto: $P(1, 2, 1)$<br>
+                        • Vector director: $\\vec{v}(1, -1, 2)$<br>
+                        • Ambas rectas están superpuestas (parece que solo hay una línea)<br><br>
+                        <em>Nota: Aunque se muestran en rojo y azul, en realidad son la misma recta.</em>
+                    `;
+                    break;
+
+                case 'paralelas':
+                    // Dos rectas paralelas: vectores directores proporcionales, sin puntos en común
+                    const p2a = [0, 0, 0];
+                    const p2b = [0, 2, 0];
+                    const v2 = [1, 0, 1];
+                    
+                    data = [
+                        crearRecta3D(p2a, v2, 'rgb(255, 0, 0)', 'l₁ (Roja)', -4, 4),
+                        crearRecta3D(p2b, v2, 'rgb(0, 0, 255)', 'l₂ (Azul)', -4, 4),
+                        crearPunto3D(p2a, 'red', 'P₁(0, 0, 0)'),
+                        crearPunto3D(p2b, 'blue', 'P₂(0, 2, 0)'),
+                        crearVector3D(v2, 'purple', 'v⃗₁ = v⃗₂')
+                    ];
+                    
+                    titulo = '⫽ Rectas Paralelas';
+                    explicacion = `
+                        <strong>Rectas Paralelas:</strong><br>
+                        Las rectas tienen la <strong>misma dirección</strong> pero nunca se tocan.<br><br>
+                        <strong>Condiciones:</strong><br>
+                        ✅ Vectores directores paralelos: $\\vec{v}_1 \\times \\vec{v}_2 = \\vec{0}$<br>
+                        ❌ NO tienen puntos en común<br><br>
+                        <strong>En este ejemplo:</strong><br>
+                        • $l_1$: pasa por $P_1(0, 0, 0)$ con $\\vec{v}_1(1, 0, 1)$<br>
+                        • $l_2$: pasa por $P_2(0, 2, 0)$ con $\\vec{v}_2(1, 0, 1)$<br>
+                        • Ambas tienen el mismo vector director<br>
+                        • Distancia constante entre ellas: 2 unidades
+                    `;
+                    break;
+
+                case 'perpendiculares':
+                    // Dos rectas perpendiculares que se cortan en un punto
+                    const p3 = [0, 0, 0];
+                    const v3a = [1, 0, 0];
+                    const v3b = [0, 1, 0];
+                    
+                    data = [
+                        crearRecta3D(p3, v3a, 'rgb(255, 0, 0)', 'l₁ (eje X)', -3, 3),
+                        crearRecta3D(p3, v3b, 'rgb(0, 0, 255)', 'l₂ (eje Y)', -3, 3),
+                        crearPunto3D(p3, 'green', 'Punto de intersección'),
+                        crearVector3D(v3a, 'red', 'v⃗₁(1, 0, 0)'),
+                        crearVector3D(v3b, 'blue', 'v⃗₂(0, 1, 0)')
+                    ];
+                    
+                    titulo = '⊥ Rectas Perpendiculares';
+                    explicacion = `
+                        <strong>Rectas Perpendiculares:</strong><br>
+                        Las rectas se <strong>intersectan formando un ángulo de 90°</strong>.<br><br>
+                        <strong>Condiciones:</strong><br>
+                        ✅ Producto punto es cero: $\\vec{v}_1 \\cdot \\vec{v}_2 = 0$<br>
+                        ✅ Se cortan en un punto<br>
+                        ✅ Ángulo entre ellas: $\\theta = 90°$<br><br>
+                        <strong>En este ejemplo:</strong><br>
+                        • $l_1$: dirección del eje X, $\\vec{v}_1(1, 0, 0)$<br>
+                        • $l_2$: dirección del eje Y, $\\vec{v}_2(0, 1, 0)$<br>
+                        • Producto punto: $(1)(0) + (0)(1) + (0)(0) = 0$ ✓<br>
+                        • Se intersectan en el origen $(0, 0, 0)$
+                    `;
+                    break;
+
+                case 'secantes':
+                    // Dos rectas que se cortan (secantes) en un punto, no perpendiculares
+                    const p4a = [-2, 0, 0];
+                    const p4b = [0, -2, 0];
+                    const v4a = [1, 1, 0];
+                    const v4b = [1, 0, 1];
+                    
+                    data = [
+                        crearRecta3D(p4a, v4a, 'rgb(255, 0, 0)', 'l₁', -3, 3),
+                        crearRecta3D(p4b, v4b, 'rgb(0, 0, 255)', 'l₂', -3, 3),
+                        crearPunto3D([0, 2, 2], 'green', 'Punto de corte'),
+                        crearVector3D(v4a, 'red', 'v⃗₁(1, 1, 0)'),
+                        crearVector3D(v4b, 'blue', 'v⃗₂(1, 0, 1)')
+                    ];
+                    
+                    titulo = '✖️ Rectas Secantes (se cortan)';
+                    explicacion = `
+                        <strong>Rectas Secantes:</strong><br>
+                        Las rectas <strong>se intersectan en un único punto</strong> formando un ángulo cualquiera (no 90°).<br><br>
+                        <strong>Condiciones:</strong><br>
+                        ❌ NO son paralelas: $\\vec{v}_1 \\times \\vec{v}_2 \\neq \\vec{0}$<br>
+                        ❌ NO son perpendiculares: $\\vec{v}_1 \\cdot \\vec{v}_2 \\neq 0$<br>
+                        ✅ Tienen exactamente un punto en común<br>
+                        ✅ Están en el mismo plano (coplanares)<br><br>
+                        <strong>En este ejemplo:</strong><br>
+                        • $\\vec{v}_1(1, 1, 0)$ y $\\vec{v}_2(1, 0, 1)$<br>
+                        • Se cortan en un punto<br>
+                        • El ángulo entre ellas es diferente de 90°
+                    `;
+                    break;
+
+                case 'alabeadas':
+                    // Rectas alabeadas: no paralelas, no se cortan
+                    const p5a = [0, 0, 0];
+                    const p5b = [0, 0, 3];
+                    const v5a = [1, 0, 0];
+                    const v5b = [0, 1, 0];
+                    
+                    data = [
+                        crearRecta3D(p5a, v5a, 'rgb(255, 0, 0)', 'l₁ (en z=0)', -3, 3),
+                        crearRecta3D(p5b, v5b, 'rgb(0, 0, 255)', 'l₂ (en z=3)', -3, 3),
+                        crearPunto3D(p5a, 'red', 'P₁(0, 0, 0)'),
+                        crearPunto3D(p5b, 'blue', 'P₂(0, 0, 3)'),
+                        crearVector3D(v5a, 'red', 'v⃗₁(1, 0, 0)'),
+                        crearVector3D([v5b[0], v5b[1], v5b[2] + 3], 'blue', 'v⃗₂(0, 1, 0)')
+                    ];
+                    
+                    titulo = '🔀 Rectas Alabeadas';
+                    explicacion = `
+                        <strong>Rectas Alabeadas (Skew Lines):</strong><br>
+                        Las rectas <strong>no son paralelas y no se intersectan</strong>. Se "cruzan" en el espacio sin tocarse.<br><br>
+                        <strong>Condiciones:</strong><br>
+                        ❌ NO son paralelas: $\\vec{v}_1 \\times \\vec{v}_2 \\neq \\vec{0}$<br>
+                        ❌ NO se intersectan: sistema sin solución<br>
+                        ❌ NO están en el mismo plano (no coplanares)<br><br>
+                        <strong>En este ejemplo:</strong><br>
+                        • $l_1$: sobre el plano XY (z=0), dirección X<br>
+                        • $l_2$: plano paralelo (z=3), dirección Y<br>
+                        • Los vectores NO son paralelos<br>
+                        • Las rectas NUNCA se tocan<br>
+                        • Este es el caso del Punto 5 del examen
+                    `;
+                    break;
+
+                default:
+                    return;
+            }
+
+            // Crear el gráfico
+            const layout = {
+                ...layoutBase,
+                title: titulo
+            };
+
+            Plotly.newPlot('grafico3d', data, layout, {responsive: true});
+            
+            // Actualizar explicación
+            document.getElementById('explicacion-grafico').innerHTML = explicacion;
+            
+            // Renderizar LaTeX en la explicación
+            if (window.MathJax) {
+                MathJax.typesetPromise([document.getElementById('explicacion-grafico')]);
+            }
+        }
+
+        // Mostrar gráfico inicial al cargar la página
+        window.addEventListener('load', function() {
+            // Esperar un poco para que todo se cargue
+            setTimeout(() => {
+                mostrarGrafico('coincidentes');
+            }, 500);
         });
     </script>
 </body>
