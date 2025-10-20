@@ -3,26 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solución Examen de Geometría Vectorial de mi Dory 😍</title>
-    
-    <!-- MathJax para renderizar LaTeX -->
-    <script>
-        MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            }
-        };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
-    
-    <!-- Plotly.js para gráficos 3D -->
-    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <title>Geometría Vectorial para mi Dory 💜</title>
     
     <style>
         * {
@@ -31,1150 +12,598 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-purple: #a78bfa;
+            --secondary-purple: #7e22ce;
+            --dark-bg: #0f0f1e;
+            --card-bg: #1a1a2e;
+            --accent-cyan: #00d4ff;
+            --text-light: #e0e0e0;
+            --text-gray: #9ca3af;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
             line-height: 1.6;
         }
 
+        /* Fondo animado con gradiente */
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 25%, #2a1a4a 50%, #1a1a2e 75%, #0f0f1e 100%);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Partículas flotantes */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contenedor principal */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 80px 20px 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-size: 4em;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         h1 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(167, 139, 250, 0.3);
         }
 
-        h2 {
-            color: #764ba2;
-            margin-top: 30px;
+        .subtitle {
+            font-size: 1.5em;
+            color: var(--text-gray);
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
+        }
+
+        .dedication {
             font-size: 1.8em;
-        }
-
-        h3 {
-            color: #555;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-size: 1.4em;
-        }
-
-        .problema {
-            background: #f8f9fa;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-        }
-
-        .enunciado {
-            background: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .desarrollo {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-        }
-
-        .paso {
-            margin: 15px 0;
-            padding: 10px;
-            background: #f5f5f5;
-            border-radius: 5px;
-        }
-
-        .formula {
-            background: #fff3cd;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            font-family: 'Courier New', monospace;
-            overflow-x: auto;
-        }
-
-        .respuesta {
-            background: #d4edda;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border-left: 5px solid #28a745;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-
-        .correcta {
-            color: #28a745;
-            font-weight: bold;
-        }
-
-        .opcion {
-            margin: 5px 0;
-            padding: 8px;
-            background: white;
-            border-radius: 5px;
-        }
-
-        .opcion.seleccionada {
-            background: #d4edda;
-            border: 2px solid #28a745;
-        }
-
-        button {
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px 5px;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .controls {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-        }
-
-        .math {
+            color: var(--accent-cyan);
             font-style: italic;
-            color: #333;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #667eea;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        .nota {
-            background: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-
-        /* Estilos para gráficos 3D */
-        .grafico-container {
-            background: white;
-            padding: 20px;
             margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
-        .grafico-3d {
-            width: 100%;
-            height: 500px;
-            border-radius: 8px;
-            margin: 10px 0;
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(0, 212, 255, 0.5); }
+            to { text-shadow: 0 0 30px rgba(0, 212, 255, 0.8), 0 0 40px rgba(167, 139, 250, 0.5); }
         }
 
-        .grafico-titulo {
-            text-align: center;
-            color: #667eea;
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            font-weight: bold;
+        /* Cards de contenido */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+            animation: fadeInUp 1s ease-out 0.3s both;
         }
 
-        .grafico-descripcion {
-            text-align: center;
-            color: #666;
-            margin-bottom: 15px;
-            font-style: italic;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .controles-grafico {
-            text-align: center;
-            margin: 15px 0;
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .controles-grafico button {
-            margin: 5px;
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--primary-purple), var(--accent-cyan));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
-        /* Estilos para MathJax */
-        mjx-container {
-            overflow-x: auto;
-            overflow-y: hidden;
+        .card:hover::before {
+            opacity: 1;
         }
 
-        .MathJax {
-            outline: 0;
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(167, 139, 250, 0.3);
         }
 
-        mjx-container[jax="CHTML"][display="true"] {
+        .card-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
             display: block;
             text-align: center;
-            margin: 1em 0;
         }
 
-        @media print {
-            body {
-                background: white;
+        .card h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: var(--primary-purple);
+            text-align: center;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .card-link {
+            display: block;
+            text-align: center;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--secondary-purple) 0%, var(--primary-purple) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(126, 34, 206, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-link::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .card-link:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .card-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(126, 34, 206, 0.6);
+        }
+
+        .card-link span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Sección de mensaje */
+        .message-section {
+            background: linear-gradient(135deg, rgba(126, 34, 206, 0.2) 0%, rgba(0, 212, 255, 0.2) 100%);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 60px 0;
+            text-align: center;
+            border: 2px solid rgba(167, 139, 250, 0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-section::before {
+            content: '💜';
+            position: absolute;
+            font-size: 15em;
+            opacity: 0.05;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .message-section h3 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--accent-cyan);
+        }
+
+        .message-section p {
+            font-size: 1.3em;
+            color: var(--text-light);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto 20px;
+        }
+
+        .heart-animation {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            10%, 30% { transform: scale(0.9); }
+            20%, 40% { transform: scale(1.1); }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+            border-top: 1px solid rgba(167, 139, 250, 0.2);
+            margin-top: 80px;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
             }
-            .controls {
-                display: none;
+
+            .subtitle {
+                font-size: 1.2em;
             }
-            button {
-                display: none;
+
+            .dedication {
+                font-size: 1.4em;
             }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .card {
+                padding: 30px;
+            }
+
+            .message-section {
+                padding: 30px;
+            }
+
+            .message-section h3 {
+                font-size: 2em;
+            }
+
+            .message-section p {
+                font-size: 1.1em;
+            }
+        }
+
+        /* Vector decorativo SVG */
+        .vector-decoration {
+            position: absolute;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .vector-decoration.top-left {
+            top: 100px;
+            left: 50px;
+            width: 150px;
+            height: 150px;
+        }
+
+        .vector-decoration.bottom-right {
+            bottom: 100px;
+            right: 50px;
+            width: 200px;
+            height: 200px;
         }
     </style>
 </head>
 <body>
+    <div class="animated-background"></div>
+
+    <!-- Partículas flotantes -->
+    <div id="particles-container"></div>
+
+    <!-- Decoraciones vectoriales -->
+    <svg class="vector-decoration top-left" viewBox="0 0 100 100">
+        <line x1="10" y1="10" x2="90" y2="10" stroke="var(--accent-cyan)" stroke-width="2"/>
+        <line x1="90" y1="10" x2="80" y2="20" stroke="var(--accent-cyan)" stroke-width="2"/>
+        <line x1="90" y1="10" x2="80" y2="0" stroke="var(--accent-cyan)" stroke-width="2"/>
+        <circle cx="10" cy="10" r="3" fill="var(--primary-purple)"/>
+    </svg>
+
+    <svg class="vector-decoration bottom-right" viewBox="0 0 100 100">
+        <line x1="50" y1="50" x2="20" y2="80" stroke="var(--primary-purple)" stroke-width="2"/>
+        <line x1="50" y1="50" x2="80" y2="80" stroke="var(--accent-cyan)" stroke-width="2"/>
+        <line x1="50" y1="50" x2="50" y2="20" stroke="var(--primary-purple)" stroke-width="2"/>
+    </svg>
+
     <div class="container">
-        <h1>📐 Solución Examen de Geometría Vectorial de mi Dory 🥰🐟🐠</h1>
+        <header>
+            <div class="logo-container">
+                <span class="logo">📐</span>
+            </div>
+            <h1>Geometría Vectorial</h1>
+            <p class="subtitle">Explorando el espacio tridimensional con matemáticas y amor</p>
+            <p class="dedication">💜 Dedicado con todo mi amor para mi Dory 🐠✨</p>
+        </header>
 
-        <div class="nota" style="text-align: center;">
-            <strong>✨ Documento con fórmulas LaTeX renderizadas</strong><br>
-            Este documento utiliza <strong>MathJax</strong> para renderizar todas las fórmulas matemáticas en formato LaTeX, proporcionando una presentación profesional y legible. Las fórmulas se cargan dinámicamente usando JavaScript, sin necesidad de instalar software adicional.
-        </div>
-
-        <div class="controls">
-            <button onclick="imprimirExamen()">🖨️ Imprimir Examen</button>
-            <button onclick="mostrarTodo()">👁️ Mostrar Todo</button>
-            <button onclick="ocultarTodo()">🔒 Ocultar Todo</button>
-        </div>
-
-        <!-- PUNTO 1 -->
-        <h2>Punto 1. (Valor 20%) Selección Múltiple</h2>
-
-        <!-- 1.a -->
-        <div class="problema" id="problema1a">
-            <h3>a. (Valor 5%) Componentes de una fuerza</h3>
-            <div class="enunciado">
-                Un hombre hala por el piso un bloque de hierro, para lo cual aplica una fuerza de 76N ejercida a un ángulo de 44° arriba de la horizontal. ¿Cuál corresponde con las componentes horizontal y vertical de la fuerza?
+        <div class="content-grid">
+            <!-- Card 1: Examen -->
+            <div class="card">
+                <span class="card-icon">📝</span>
+                <h2>Examen Resuelto</h2>
+                <p>
+                    Soluciones completas y detalladas del examen de Geometría Vectorial. 
+                    Incluye visualizaciones 3D interactivas, paso a paso de cada ejercicio, 
+                    y fórmulas matemáticas renderizadas profesionalmente.
+                </p>
+                <a href="examen_resuelto.html" class="card-link">
+                    <span>Ver Soluciones del Examen 🚀</span>
+                </a>
             </div>
 
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 1: Identificar los datos</strong>
-                    <ul>
-                        <li>Magnitud de la fuerza: F = 76 N</li>
-                        <li>Ángulo: θ = 44°</li>
-                    </ul>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 2: Aplicar las fórmulas de componentes</strong>
-                    <div class="formula">
-                        $$F_x = F \times \cos(\theta)$$
-                        $$F_y = F \times \sin(\theta)$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 3: Calcular la componente horizontal</strong>
-                    <div class="formula">
-                        $$F_x = 76 \times \cos(44°)$$
-                        $$F_x = 76 \times 0.7193$$
-                        $$F_x = 54.67 \text{ N}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 4: Calcular la componente vertical</strong>
-                    <div class="formula">
-                        $$F_y = 76 \times \sin(44°)$$
-                        $$F_y = 76 \times 0.6947$$
-                        $$F_y = 52.79 \text{ N}$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ Respuesta correcta: <strong>iv) x = 54.67, y = 52.79</strong>
-                </div>
+            <!-- Card 2: Taller -->
+            <div class="card">
+                <span class="card-icon">📚</span>
+                <h2>Taller Parcial</h2>
+                <p>
+                    Desarrollo completo del Taller Parcial Institucional con explicaciones 
+                    pedagógicas. Problemas de rectas, planos, vectores y mucho más, 
+                    todo explicado con claridad y amor.
+                </p>
+                <a href="solucion_taller_parcial.html" class="card-link">
+                    <span>Explorar el Taller 📖</span>
+                </a>
             </div>
         </div>
 
-        <!-- 1.b -->
-        <div class="problema" id="problema1b">
-            <h3>b. (Valor 5%) Rectas coincidentes</h3>
-            <div class="enunciado">
-                Si se tienen dos rectas $l_1$ y $l_2$ en $\mathbb{R}^3$ con sus respectivos vectores directores $\vec{v}_1$ y $\vec{v}_2$, se dice que ambas rectas son coincidentes cuando:
-                <div class="opcion">1. El producto cruz entre $\vec{v}_1$ y $\vec{v}_2$ es igual a $\vec{0}$</div>
-                <div class="opcion">2. Se cortan entre sí formando un ángulo de $45°$</div>
-                <div class="opcion">3. El producto punto entre $\vec{v}_1$ y $\vec{v}_2$ es igual a $0$</div>
-                <div class="opcion">4. Tienen un punto en común</div>
-            </div>
-
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Concepto de rectas coincidentes:</strong>
-                    <p>Dos rectas son <strong>coincidentes</strong> cuando son la misma recta, es decir, comparten todos sus puntos.</p>
-                </div>
-
-                <div class="paso">
-                    <strong>Análisis de las opciones:</strong>
-                    <ul>
-                        <li><strong>Opción 1:</strong> Si $\vec{v}_1 \times \vec{v}_2 = \vec{0}$, los vectores son paralelos (incluye el caso de ser coincidentes). ✓</li>
-                        <li><strong>Opción 2:</strong> Un ángulo de $45°$ no define rectas coincidentes. ✗</li>
-                        <li><strong>Opción 3:</strong> Si $\vec{v}_1 \cdot \vec{v}_2 = 0$, las rectas son perpendiculares. ✗</li>
-                        <li><strong>Opción 4:</strong> Para ser coincidentes deben tener todos los puntos en común, no solo uno. Las rectas coincidentes sí tienen un punto en común (de hecho, todos). ✓</li>
-                    </ul>
-                </div>
-
-                <div class="nota">
-                    <strong>Nota importante:</strong> Para que dos rectas sean coincidentes se requiere que:
-                    <ol>
-                        <li>Sus vectores directores sean paralelos ($\vec{v}_1 \times \vec{v}_2 = \vec{0}$)</li>
-                        <li>Tengan al menos un punto en común</li>
-                    </ol>
-                </div>
-
-                <div class="respuesta">
-                    ✅ Respuesta correcta: <strong>i) Opciones 1) y 4)</strong>
-                </div>
-
-                <!-- Visualización gráfica 3D -->
-                <div class="grafico-container">
-                    <div class="grafico-titulo">📊 Visualización 3D Interactiva: Tipos de Rectas en ℝ³</div>
-                    <div class="grafico-descripcion">
-                        Explora los diferentes tipos de relaciones entre rectas en el espacio tridimensional. 
-                        Puedes rotar, hacer zoom y explorar cada visualización.
-                    </div>
-                    
-                    <div class="controles-grafico">
-                        <button onclick="mostrarGrafico('coincidentes')">📍 Rectas Coincidentes</button>
-                        <button onclick="mostrarGrafico('paralelas')">⫽ Rectas Paralelas</button>
-                        <button onclick="mostrarGrafico('perpendiculares')">⊥ Rectas Perpendiculares</button>
-                        <button onclick="mostrarGrafico('secantes')">✖️ Rectas que se Cortan</button>
-                        <button onclick="mostrarGrafico('alabeadas')">🔀 Rectas Alabeadas</button>
-                    </div>
-
-                    <div id="grafico3d" class="grafico-3d"></div>
-                    
-                    <div id="explicacion-grafico" style="background: #f0f8ff; padding: 15px; border-radius: 8px; margin-top: 15px;">
-                        <strong>💡 Haz clic en un botón para ver cada tipo de recta</strong>
-                    </div>
-                </div>
-            </div>
+        <div class="message-section">
+            <h3>Un mensaje especial <span class="heart-animation">💜</span></h3>
+            <p>
+                Cada vector tiene magnitud y dirección, pero el vector que nos une 
+                es infinito en magnitud y apunta directo al corazón. En este espacio 
+                tridimensional llamado vida, tú eres mi punto de referencia, mi origen 
+                de coordenadas, desde donde todo cobra sentido.
+            </p>
+            <p>
+                Así como los vectores forman bases que generan espacios completos, 
+                tú y yo formamos una base perfecta que genera un universo de posibilidades. 
+                <strong>Te amo, Dory 🐠💕</strong>
+            </p>
+            <p style="font-size: 3em; margin-top: 30px;">
+                <span class="heart-animation">💜</span>
+                <span class="heart-animation" style="animation-delay: 0.2s;">🐟</span>
+                <span class="heart-animation" style="animation-delay: 0.4s;">💙</span>
+                <span class="heart-animation" style="animation-delay: 0.6s;">🐠</span>
+                <span class="heart-animation" style="animation-delay: 0.8s;">✨</span>
+            </p>
         </div>
 
-        <!-- 1.c -->
-        <div class="problema" id="problema1c">
-            <h3>c. (Valor 5%) Área del paralelogramo</h3>
-            <div class="enunciado">
-                Los vectores $\vec{U} = (1, -2, 8)$ y $\vec{V} = (-3, 3, 2)$ forman un paralelogramo. ¿Cuál es el área de dicha figura?
-            </div>
-
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 1: Recordar la fórmula</strong>
-                    <div class="formula">
-                        $$\text{Área del paralelogramo} = \|\vec{U} \times \vec{V}\|$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 2: Calcular el producto cruz $\vec{U} \times \vec{V}$</strong>
-                    <div class="formula">
-                        $$\vec{U} \times \vec{V} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 1 & -2 & 8 \\ -3 & 3 & 2 \end{vmatrix}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 3: Calcular cada componente</strong>
-                    <div class="formula">
-                        $$\vec{i}: (-2)(2) - (8)(3) = -4 - 24 = -28$$
-                        $$\vec{j}: -[(1)(2) - (8)(-3)] = -[2 + 24] = -26$$
-                        $$\vec{k}: (1)(3) - (-2)(-3) = 3 - 6 = -3$$
-                    </div>
-                    <div class="formula">
-                        $$\vec{U} \times \vec{V} = (-28, -26, -3)$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 4: Calcular la magnitud</strong>
-                    <div class="formula">
-                        $$\|\vec{U} \times \vec{V}\| = \sqrt{(-28)^2 + (-26)^2 + (-3)^2}$$
-                        $$\|\vec{U} \times \vec{V}\| = \sqrt{784 + 676 + 9}$$
-                        $$\|\vec{U} \times \vec{V}\| = \sqrt{1469}$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ Respuesta correcta: <strong>ii) $\sqrt{1469}$ unid.²</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- 1.d -->
-        <div class="problema" id="problema1d">
-            <h3>d. (Valor 5%) Ángulo entre rectas</h3>
-            <div class="enunciado">
-                ¿Cuál es el ángulo que se forma entre el siguiente par de rectas?<br>
-                <div class="formula">
-                    $$l_1: \frac{x - 3}{7} = \frac{y - 2}{-1} = \frac{z - 5}{-4}$$
-                    $$l_2: \frac{x - 3}{-3} = \frac{y + 8}{8} = \frac{z - 2}{-5}$$
-                </div>
-            </div>
-
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 1: Identificar los vectores directores</strong>
-                    <div class="formula">
-                        $$\vec{v}_1 = (7, -1, -4)$$
-                        $$\vec{v}_2 = (-3, 8, -5)$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 2: Aplicar la fórmula del ángulo entre vectores</strong>
-                    <div class="formula">
-                        $$\cos(\theta) = \frac{\vec{v}_1 \cdot \vec{v}_2}{\|\vec{v}_1\| \times \|\vec{v}_2\|}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 3: Calcular el producto punto</strong>
-                    <div class="formula">
-                        $$\vec{v}_1 \cdot \vec{v}_2 = (7)(-3) + (-1)(8) + (-4)(-5)$$
-                        $$\vec{v}_1 \cdot \vec{v}_2 = -21 - 8 + 20$$
-                        $$\vec{v}_1 \cdot \vec{v}_2 = -9$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 4: Calcular las magnitudes</strong>
-                    <div class="formula">
-                        $$\|\vec{v}_1\| = \sqrt{7^2 + (-1)^2 + (-4)^2} = \sqrt{49 + 1 + 16} = \sqrt{66}$$
-                        $$\|\vec{v}_2\| = \sqrt{(-3)^2 + 8^2 + (-5)^2} = \sqrt{9 + 64 + 25} = \sqrt{98}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 5: Calcular el ángulo</strong>
-                    <div class="formula">
-                        $$\cos(\theta) = \frac{-9}{\sqrt{66} \times \sqrt{98}}$$
-                        $$\cos(\theta) = \frac{-9}{\sqrt{6468}}$$
-                        $$\cos(\theta) = \frac{-9}{80.42} = -0.1119$$
-                        $$\theta = \arccos(-0.1119)$$
-                        $$\theta = 96.42°$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ Respuesta correcta: <strong>iv) $\theta = 96.42°$</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- PUNTO 2 -->
-        <h2>Punto 2. (Valor 20%) Volumen del paralelepípedo</h2>
-        <div class="problema" id="problema2">
-            <div class="enunciado">
-                Calcular el volumen de un paralelepípedo determinado por los vectores:<br>
-                $\vec{U} = \langle 5, -7, 1 \rangle$, $\vec{V} = \langle 7, -6, 2 \rangle$ y $\vec{W} = (3, -1, 5)$ en $\mathbb{R}^3$
-            </div>
-
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 1: Recordar la fórmula</strong>
-                    <div class="formula">
-                        $$\text{Volumen} = |\vec{U} \cdot (\vec{V} \times \vec{W})|$$
-                    </div>
-                    <p>El volumen del paralelepípedo es el valor absoluto del producto mixto (triple producto escalar).</p>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 2: Calcular $\vec{V} \times \vec{W}$</strong>
-                    <div class="formula">
-                        $$\vec{V} \times \vec{W} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 7 & -6 & 2 \\ 3 & -1 & 5 \end{vmatrix}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 3: Calcular las componentes del producto cruz</strong>
-                    <div class="formula">
-                        $$\vec{i}: (-6)(5) - (2)(-1) = -30 + 2 = -28$$
-                        $$\vec{j}: -[(7)(5) - (2)(3)] = -[35 - 6] = -29$$
-                        $$\vec{k}: (7)(-1) - (-6)(3) = -7 + 18 = 11$$
-                    </div>
-                    <div class="formula">
-                        $$\vec{V} \times \vec{W} = (-28, -29, 11)$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 4: Calcular $\vec{U} \cdot (\vec{V} \times \vec{W})$</strong>
-                    <div class="formula">
-                        $$\vec{U} \cdot (\vec{V} \times \vec{W}) = (5, -7, 1) \cdot (-28, -29, 11)$$
-                        $$\vec{U} \cdot (\vec{V} \times \vec{W}) = (5)(-28) + (-7)(-29) + (1)(11)$$
-                        $$\vec{U} \cdot (\vec{V} \times \vec{W}) = -140 + 203 + 11$$
-                        $$\vec{U} \cdot (\vec{V} \times \vec{W}) = 74$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 5: Calcular el volumen</strong>
-                    <div class="formula">
-                        $$\text{Volumen} = |74| = 74 \text{ unidades}^3$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>El volumen del paralelepípedo es $74 \text{ unidades}^3$</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- PUNTO 3 -->
-        <h2>Punto 3. (Valor 20%) Ecuaciones de la recta</h2>
-        <div class="problema" id="problema3">
-            <div class="enunciado">
-                Los puntos $P(9, 8, -7)$ y $Q(5, 10, -2)$ forman una recta en el espacio. A partir de estos datos encuentre:
-                <ol type="a">
-                    <li>Las ecuaciones paramétrica y simétrica de la recta.</li>
-                    <li>El punto de corte de la recta con el plano XZ.</li>
-                    <li>Determinar si el punto $R(9, 42, 19)$ pertenece o no a la recta.</li>
-                </ol>
-            </div>
-
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 1: Encontrar el vector director</strong>
-                    <p>El vector director se obtiene restando las coordenadas de los dos puntos:</p>
-                    <div class="formula">
-                        $$\vec{v} = Q - P = (5-9, 10-8, -2-(-7))$$
-                        $$\vec{v} = (-4, 2, 5)$$
-                    </div>
-                </div>
-
-                <h4>a) Ecuaciones paramétrica y simétrica:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 2: Ecuación paramétrica</strong>
-                    <p>Usando el punto $P(9, 8, -7)$ y el vector director $\vec{v} = (-4, 2, 5)$:</p>
-                    <div class="formula">
-                        $$\begin{cases} x = 9 - 4t \\ y = 8 + 2t \\ z = -7 + 5t \end{cases}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 3: Ecuación simétrica</strong>
-                    <p>Despejando $t$ de cada ecuación e igualando:</p>
-                    <div class="formula">
-                        $$\frac{x - 9}{-4} = \frac{y - 8}{2} = \frac{z + 7}{5}$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>Ecuación paramétrica:</strong> $x = 9 - 4t$, $y = 8 + 2t$, $z = -7 + 5t$<br>
-                    ✅ <strong>Ecuación simétrica:</strong> $\displaystyle\frac{x - 9}{-4} = \frac{y - 8}{2} = \frac{z + 7}{5}$
-                </div>
-
-                <h4>b) Punto de corte con el plano XZ:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 4: Identificar la condición</strong>
-                    <p>El plano XZ está definido por $y = 0$. Entonces, buscamos el valor de $t$ cuando $y = 0$:</p>
-                    <div class="formula">
-                        $$y = 8 + 2t = 0$$
-                        $$2t = -8$$
-                        $$t = -4$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 5: Sustituir $t = -4$ en las ecuaciones paramétricas</strong>
-                    <div class="formula">
-                        $$x = 9 - 4(-4) = 9 + 16 = 25$$
-                        $$y = 8 + 2(-4) = 8 - 8 = 0$$
-                        $$z = -7 + 5(-4) = -7 - 20 = -27$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>El punto de corte con el plano XZ es: $(25, 0, -27)$</strong>
-                </div>
-
-                <h4>c) ¿El punto $R(9, 42, 19)$ pertenece a la recta?</h4>
-                
-                <div class="paso">
-                    <strong>Paso 6: Verificar si existe un valor de $t$ que satisfaga las tres ecuaciones</strong>
-                    <p>De la ecuación $x = 9 - 4t$:</p>
-                    <div class="formula">
-                        $$9 = 9 - 4t$$
-                        $$4t = 0$$
-                        $$t = 0$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 7: Verificar con $t = 0$ en las otras coordenadas</strong>
-                    <div class="formula">
-                        $$y = 8 + 2(0) = 8 \neq 42 \quad ✗$$
-                        $$z = -7 + 5(0) = -7 \neq 19 \quad ✗$$
-                    </div>
-                    <p>Como las coordenadas $y$ y $z$ no coinciden con las del punto $R$, el punto NO pertenece a la recta.</p>
-                </div>
-
-                <div class="paso">
-                    <strong>Verificación alternativa:</strong>
-                    <p>Podemos también verificar usando la ecuación de $y$:</p>
-                    <div class="formula">
-                        $$42 = 8 + 2t \implies t = 17$$
-                    </div>
-                    <p>Si $t = 17$, entonces:</p>
-                    <div class="formula">
-                        $$x = 9 - 4(17) = 9 - 68 = -59 \neq 9 \quad ✗$$
-                    </div>
-                    <p>Los valores de $t$ son diferentes para cada coordenada, confirmando que $R$ no pertenece a la recta.</p>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>El punto $R(9, 42, 19)$ NO pertenece a la recta</strong>
-                </div>
-            </div>
-        </div>
-
-        <!-- PUNTO 5 -->
-        <h2>Punto 5. (Valor 20%) Análisis de dos rectas</h2>
-        <div class="problema" id="problema5">
-            <div class="enunciado">
-                Dadas las rectas:<br>
-                <div class="formula">
-                    $$l_1: \frac{x-7}{9} = \frac{y-1}{4} = \frac{z-3}{-5}$$
-                    $$l_2: \frac{x+8}{-1} = \frac{y-6}{4} = \frac{z-10}{-3}$$
-                </div>
-                Verificar si:
-                <ol type="a">
-                    <li>Son paralelas.</li>
-                    <li>Son perpendiculares.</li>
-                    <li>Son coincidentes.</li>
-                    <li>Se cortan. En caso de que se corten, encontrar las coordenadas del punto de corte.</li>
-                </ol>
-            </div>
-
-            <div class="desarrollo">
-                <h4>📝 Desarrollo:</h4>
-                
-                <div class="paso">
-                    <strong>Paso 1: Identificar vectores directores y puntos</strong>
-                    <div class="formula">
-                        $$\text{Para } l_1: \vec{v}_1 = (9, 4, -5) \text{ y punto } P_1(7, 1, 3)$$
-                        $$\text{Para } l_2: \vec{v}_2 = (-1, 4, -3) \text{ y punto } P_2(-8, 6, 10)$$
-                    </div>
-                </div>
-
-                <h4>a) ¿Son paralelas?</h4>
-                
-                <div class="paso">
-                    <strong>Paso 2: Verificar si los vectores directores son proporcionales</strong>
-                    <p>Dos rectas son paralelas si sus vectores directores son proporcionales ($\vec{v}_1 = k \cdot \vec{v}_2$)</p>
-                    <div class="formula">
-                        $$\frac{\vec{v}_1}{\vec{v}_2} = \frac{(9, 4, -5)}{(-1, 4, -3)}$$
-                        $$\frac{9}{-1} = -9$$
-                        $$\frac{4}{4} = 1$$
-                        $$\frac{-5}{-3} = \frac{5}{3} \approx 1.67$$
-                    </div>
-                    <p>Las razones no son iguales, por lo tanto, los vectores NO son proporcionales.</p>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>NO son paralelas</strong>
-                </div>
-
-                <h4>b) ¿Son perpendiculares?</h4>
-                
-                <div class="paso">
-                    <strong>Paso 3: Calcular el producto punto</strong>
-                    <p>Dos rectas son perpendiculares si $\vec{v}_1 \cdot \vec{v}_2 = 0$</p>
-                    <div class="formula">
-                        $$\vec{v}_1 \cdot \vec{v}_2 = (9)(-1) + (4)(4) + (-5)(-3)$$
-                        $$\vec{v}_1 \cdot \vec{v}_2 = -9 + 16 + 15$$
-                        $$\vec{v}_1 \cdot \vec{v}_2 = 22 \neq 0$$
-                    </div>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>NO son perpendiculares</strong>
-                </div>
-
-                <h4>c) ¿Son coincidentes?</h4>
-                
-                <div class="paso">
-                    <strong>Paso 4: Análisis</strong>
-                    <p>Para ser coincidentes, primero deben ser paralelas. Como ya determinamos que NO son paralelas, entonces tampoco pueden ser coincidentes.</p>
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>NO son coincidentes</strong>
-                </div>
-
-                <h4>d) ¿Se cortan? Encontrar el punto de corte</h4>
-                
-                <div class="paso">
-                    <strong>Paso 5: Plantear las ecuaciones paramétricas</strong>
-                    <div class="formula">
-                        $$\text{Para } l_1: \begin{cases} x = 7 + 9t \\ y = 1 + 4t \\ z = 3 - 5t \end{cases}$$
-                        $$\text{Para } l_2: \begin{cases} x = -8 - s \\ y = 6 + 4s \\ z = 10 - 3s \end{cases}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 6: Igualar las ecuaciones para encontrar $t$ y $s$</strong>
-                    <div class="formula">
-                        $$\text{De } x: 7 + 9t = -8 - s \implies 9t + s = -15 \quad (1)$$
-                        $$\text{De } y: 1 + 4t = 6 + 4s \implies 4t - 4s = 5 \quad (2)$$
-                        $$\text{De } z: 3 - 5t = 10 - 3s \implies -5t + 3s = 7 \quad (3)$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 7: Resolver el sistema de ecuaciones</strong>
-                    <p>De la ecuación (2):</p>
-                    <div class="formula">
-                        $$4t - 4s = 5$$
-                        $$t - s = \frac{5}{4}$$
-                        $$t = s + \frac{5}{4} \quad (4)$$
-                    </div>
-                    <p>Sustituir (4) en (1):</p>
-                    <div class="formula">
-                        $$9\left(s + \frac{5}{4}\right) + s = -15$$
-                        $$9s + \frac{45}{4} + s = -15$$
-                        $$10s = -15 - \frac{45}{4} = -\frac{60}{4} - \frac{45}{4} = -\frac{105}{4}$$
-                        $$s = -\frac{21}{8}$$
-                    </div>
-                    <p>Sustituir $s$ en (4):</p>
-                    <div class="formula">
-                        $$t = -\frac{21}{8} + \frac{5}{4} = -\frac{21}{8} + \frac{10}{8} = -\frac{11}{8}$$
-                    </div>
-                </div>
-
-                <div class="paso">
-                    <strong>Paso 8: Verificar con la ecuación (3)</strong>
-                    <div class="formula">
-                        $$-5t + 3s = 7$$
-                        $$-5\left(-\frac{11}{8}\right) + 3\left(-\frac{21}{8}\right) = \frac{55}{8} - \frac{63}{8} = -\frac{8}{8} = -1 \neq 7 \quad ✗$$
-                    </div>
-                    <p>Como no se satisface la tercera ecuación, el sistema NO tiene solución.</p>
-                </div>
-
-                <div class="nota">
-                    <strong>Conclusión:</strong> Como los vectores directores NO son paralelos pero el sistema de ecuaciones NO tiene solución, las rectas son <strong>ALABEADAS</strong> (se cruzan en el espacio sin intersectarse).
-                </div>
-
-                <div class="respuesta">
-                    ✅ <strong>Las rectas NO se cortan. Son rectas alabeadas (se cruzan en el espacio tridimensional sin intersectarse)</strong>
-                </div>
-
-                <div class="respuesta">
-                    <strong>Resumen del Punto 5:</strong><br>
-                    <strong>a)</strong> NO son paralelas<br>
-                    <strong>b)</strong> NO son perpendiculares<br>
-                    <strong>c)</strong> NO son coincidentes<br>
-                    <strong>d)</strong> NO se cortan (son alabeadas)
-                </div>
-            </div>
-        </div>
-
-        <!-- Nota sobre punto 4 -->
-        <div class="nota">
-            <strong>Nota:</strong> El Punto 4 no fue resuelto según las instrucciones proporcionadas.
-        </div>
-
-        <div class="controls">
-            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir al inicio</button>
-            <button onclick="imprimirExamen()">🖨️ Imprimir Examen</button>
-        </div>
-
-        <footer style="text-align: center; margin-top: 40px; padding: 20px; color: #666; border-top: 2px solid #667eea;">
-            <p>📐 Examen de Geometría Vectorial - Soluciones Completas</p>
-            <p style="font-size: 0.9em;">Generado el: <span id="fecha"></span></p>
+        <footer>
+            <p>📐 <strong>Geometría Vectorial</strong> - Material de estudio creado con amor</p>
+            <p>Para mi amada Dory 💜 | <span id="fecha"></span></p>
+            <p style="margin-top: 20px; font-size: 0.9em;">
+                "En el espacio vectorial del amor, nuestra magnitud tiende al infinito" ∞
+            </p>
         </footer>
     </div>
 
     <script>
-        // Mostrar fecha actual
+        // Mostrar fecha
         document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
-            weekday: 'long',
             year: 'numeric',
             month: 'long',
             day: 'numeric'
         });
 
-        // Función para imprimir
-        function imprimirExamen() {
-            window.print();
-        }
+        // Crear partículas flotantes
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 30;
 
-        // Funciones para mostrar/ocultar desarrollos
-        function mostrarTodo() {
-            const desarrollos = document.querySelectorAll('.desarrollo');
-            desarrollos.forEach(dev => {
-                dev.style.display = 'block';
-            });
-        }
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Posición inicial aleatoria
+                particle.style.left = Math.random() * 100 + '%';
+                
+                // Duración de animación aleatoria
+                const duration = 10 + Math.random() * 20;
+                particle.style.animationDuration = duration + 's';
+                
+                // Delay aleatorio
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                // Tamaño aleatorio
+                const size = 2 + Math.random() * 4;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
 
-        function ocultarTodo() {
-            const desarrollos = document.querySelectorAll('.desarrollo');
-            desarrollos.forEach(dev => {
-                dev.style.display = 'none';
-            });
-        }
-
-        // Agregar interactividad a los problemas
-        document.querySelectorAll('.problema').forEach(problema => {
-            const titulo = problema.querySelector('h3');
-            if (titulo) {
-                titulo.style.cursor = 'pointer';
-                titulo.addEventListener('click', function() {
-                    const desarrollo = problema.querySelector('.desarrollo');
-                    if (desarrollo) {
-                        desarrollo.style.display = desarrollo.style.display === 'none' ? 'block' : 'none';
-                    }
-                });
+                container.appendChild(particle);
             }
-        });
+        }
 
-        // Efecto de animación al hacer scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
+        // Efecto parallax suave al mover el mouse
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const decorations = document.querySelectorAll('.vector-decoration');
+            decorations.forEach((decoration, index) => {
+                const speed = (index + 1) * 10;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                decoration.style.transform = `translate(${x}px, ${y}px)`;
             });
         });
 
-        document.querySelectorAll('.problema').forEach(problema => {
-            problema.style.opacity = '0';
-            problema.style.transform = 'translateY(20px)';
-            problema.style.transition = 'all 0.5s ease-in-out';
-            observer.observe(problema);
+        // Efecto de hover en las cards con movimiento 3D
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
+            });
         });
 
-        // ==========================================
-        // FUNCIONES PARA GRÁFICOS 3D
-        // ==========================================
+        // Inicializar
+        createParticles();
 
-        // Función para crear una recta en 3D dados un punto y un vector director
-        function crearRecta3D(punto, vector, color, nombre, tMin = -5, tMax = 5) {
-            const t = [];
-            const x = [];
-            const y = [];
-            const z = [];
-            
-            const steps = 100;
-            for (let i = 0; i <= steps; i++) {
-                const ti = tMin + (tMax - tMin) * i / steps;
-                t.push(ti);
-                x.push(punto[0] + vector[0] * ti);
-                y.push(punto[1] + vector[1] * ti);
-                z.push(punto[2] + vector[2] * ti);
-            }
-            
-            return {
-                type: 'scatter3d',
-                mode: 'lines',
-                x: x,
-                y: y,
-                z: z,
-                name: nombre,
-                line: {
-                    color: color,
-                    width: 6
-                }
-            };
-        }
-
-        // Función para crear un punto en 3D
-        function crearPunto3D(punto, color, nombre) {
-            return {
-                type: 'scatter3d',
-                mode: 'markers',
-                x: [punto[0]],
-                y: [punto[1]],
-                z: [punto[2]],
-                name: nombre,
-                marker: {
-                    size: 8,
-                    color: color
-                }
-            };
-        }
-
-        // Función para crear un vector desde el origen
-        function crearVector3D(vector, color, nombre) {
-            return {
-                type: 'scatter3d',
-                mode: 'lines+markers',
-                x: [0, vector[0]],
-                y: [0, vector[1]],
-                z: [0, vector[2]],
-                name: nombre,
-                line: {
-                    color: color,
-                    width: 4
-                },
-                marker: {
-                    size: [0, 8],
-                    color: color
-                }
-            };
-        }
-
-        // Configuración base para todos los gráficos
-        const layoutBase = {
-            scene: {
-                xaxis: { title: 'X', range: [-6, 6] },
-                yaxis: { title: 'Y', range: [-6, 6] },
-                zaxis: { title: 'Z', range: [-6, 6] },
-                aspectmode: 'cube',
-                camera: {
-                    eye: { x: 1.5, y: 1.5, z: 1.5 }
-                }
-            },
-            margin: { l: 0, r: 0, b: 0, t: 40 },
-            paper_bgcolor: 'rgba(240,248,255,0.3)',
-            plot_bgcolor: 'rgba(240,248,255,0.3)'
-        };
-
-        // Función principal para mostrar diferentes tipos de rectas
-        function mostrarGrafico(tipo) {
-            let data = [];
-            let titulo = '';
-            let explicacion = '';
-
-            switch(tipo) {
-                case 'coincidentes':
-                    // Dos rectas coincidentes: son la misma recta
-                    const p1 = [1, 2, 1];
-                    const v1 = [1, -1, 2];
-                    
-                    data = [
-                        crearRecta3D(p1, v1, 'rgb(255, 0, 0)', 'l₁ (Roja)', -3, 3),
-                        crearRecta3D(p1, v1, 'rgb(0, 0, 255)', 'l₂ (Azul - coincide con l₁)', -3, 3),
-                        crearPunto3D(p1, 'green', 'Punto P₁ = P₂'),
-                        crearVector3D(v1, 'purple', 'v⃗₁ = v⃗₂')
-                    ];
-                    
-                    titulo = '📍 Rectas Coincidentes';
-                    explicacion = `
-                        <strong>Rectas Coincidentes:</strong><br>
-                        Las dos rectas son <strong>la misma recta</strong>. Comparten todos sus puntos.<br><br>
-                        <strong>Condiciones:</strong><br>
-                        ✅ Vectores directores paralelos: $\\vec{v}_1 \\times \\vec{v}_2 = \\vec{0}$<br>
-                        ✅ Tienen al menos un punto en común<br><br>
-                        <strong>En este ejemplo:</strong><br>
-                        • Punto: $P(1, 2, 1)$<br>
-                        • Vector director: $\\vec{v}(1, -1, 2)$<br>
-                        • Ambas rectas están superpuestas (parece que solo hay una línea)<br><br>
-                        <em>Nota: Aunque se muestran en rojo y azul, en realidad son la misma recta.</em>
-                    `;
-                    break;
-
-                case 'paralelas':
-                    // Dos rectas paralelas: vectores directores proporcionales, sin puntos en común
-                    const p2a = [0, 0, 0];
-                    const p2b = [0, 2, 0];
-                    const v2 = [1, 0, 1];
-                    
-                    data = [
-                        crearRecta3D(p2a, v2, 'rgb(255, 0, 0)', 'l₁ (Roja)', -4, 4),
-                        crearRecta3D(p2b, v2, 'rgb(0, 0, 255)', 'l₂ (Azul)', -4, 4),
-                        crearPunto3D(p2a, 'red', 'P₁(0, 0, 0)'),
-                        crearPunto3D(p2b, 'blue', 'P₂(0, 2, 0)'),
-                        crearVector3D(v2, 'purple', 'v⃗₁ = v⃗₂')
-                    ];
-                    
-                    titulo = '⫽ Rectas Paralelas';
-                    explicacion = `
-                        <strong>Rectas Paralelas:</strong><br>
-                        Las rectas tienen la <strong>misma dirección</strong> pero nunca se tocan.<br><br>
-                        <strong>Condiciones:</strong><br>
-                        ✅ Vectores directores paralelos: $\\vec{v}_1 \\times \\vec{v}_2 = \\vec{0}$<br>
-                        ❌ NO tienen puntos en común<br><br>
-                        <strong>En este ejemplo:</strong><br>
-                        • $l_1$: pasa por $P_1(0, 0, 0)$ con $\\vec{v}_1(1, 0, 1)$<br>
-                        • $l_2$: pasa por $P_2(0, 2, 0)$ con $\\vec{v}_2(1, 0, 1)$<br>
-                        • Ambas tienen el mismo vector director<br>
-                        • Distancia constante entre ellas: 2 unidades
-                    `;
-                    break;
-
-                case 'perpendiculares':
-                    // Dos rectas perpendiculares que se cortan en un punto
-                    const p3 = [0, 0, 0];
-                    const v3a = [1, 0, 0];
-                    const v3b = [0, 1, 0];
-                    
-                    data = [
-                        crearRecta3D(p3, v3a, 'rgb(255, 0, 0)', 'l₁ (eje X)', -3, 3),
-                        crearRecta3D(p3, v3b, 'rgb(0, 0, 255)', 'l₂ (eje Y)', -3, 3),
-                        crearPunto3D(p3, 'green', 'Punto de intersección'),
-                        crearVector3D(v3a, 'red', 'v⃗₁(1, 0, 0)'),
-                        crearVector3D(v3b, 'blue', 'v⃗₂(0, 1, 0)')
-                    ];
-                    
-                    titulo = '⊥ Rectas Perpendiculares';
-                    explicacion = `
-                        <strong>Rectas Perpendiculares:</strong><br>
-                        Las rectas se <strong>intersectan formando un ángulo de 90°</strong>.<br><br>
-                        <strong>Condiciones:</strong><br>
-                        ✅ Producto punto es cero: $\\vec{v}_1 \\cdot \\vec{v}_2 = 0$<br>
-                        ✅ Se cortan en un punto<br>
-                        ✅ Ángulo entre ellas: $\\theta = 90°$<br><br>
-                        <strong>En este ejemplo:</strong><br>
-                        • $l_1$: dirección del eje X, $\\vec{v}_1(1, 0, 0)$<br>
-                        • $l_2$: dirección del eje Y, $\\vec{v}_2(0, 1, 0)$<br>
-                        • Producto punto: $(1)(0) + (0)(1) + (0)(0) = 0$ ✓<br>
-                        • Se intersectan en el origen $(0, 0, 0)$
-                    `;
-                    break;
-
-                case 'secantes':
-                    // Dos rectas que se cortan (secantes) en un punto, no perpendiculares
-                    const p4a = [-2, 0, 0];
-                    const p4b = [0, -2, 0];
-                    const v4a = [1, 1, 0];
-                    const v4b = [1, 0, 1];
-                    
-                    data = [
-                        crearRecta3D(p4a, v4a, 'rgb(255, 0, 0)', 'l₁', -3, 3),
-                        crearRecta3D(p4b, v4b, 'rgb(0, 0, 255)', 'l₂', -3, 3),
-                        crearPunto3D([0, 2, 2], 'green', 'Punto de corte'),
-                        crearVector3D(v4a, 'red', 'v⃗₁(1, 1, 0)'),
-                        crearVector3D(v4b, 'blue', 'v⃗₂(1, 0, 1)')
-                    ];
-                    
-                    titulo = '✖️ Rectas Secantes (se cortan)';
-                    explicacion = `
-                        <strong>Rectas Secantes:</strong><br>
-                        Las rectas <strong>se intersectan en un único punto</strong> formando un ángulo cualquiera (no 90°).<br><br>
-                        <strong>Condiciones:</strong><br>
-                        ❌ NO son paralelas: $\\vec{v}_1 \\times \\vec{v}_2 \\neq \\vec{0}$<br>
-                        ❌ NO son perpendiculares: $\\vec{v}_1 \\cdot \\vec{v}_2 \\neq 0$<br>
-                        ✅ Tienen exactamente un punto en común<br>
-                        ✅ Están en el mismo plano (coplanares)<br><br>
-                        <strong>En este ejemplo:</strong><br>
-                        • $\\vec{v}_1(1, 1, 0)$ y $\\vec{v}_2(1, 0, 1)$<br>
-                        • Se cortan en un punto<br>
-                        • El ángulo entre ellas es diferente de 90°
-                    `;
-                    break;
-
-                case 'alabeadas':
-                    // Rectas alabeadas: no paralelas, no se cortan
-                    const p5a = [0, 0, 0];
-                    const p5b = [0, 0, 3];
-                    const v5a = [1, 0, 0];
-                    const v5b = [0, 1, 0];
-                    
-                    data = [
-                        crearRecta3D(p5a, v5a, 'rgb(255, 0, 0)', 'l₁ (en z=0)', -3, 3),
-                        crearRecta3D(p5b, v5b, 'rgb(0, 0, 255)', 'l₂ (en z=3)', -3, 3),
-                        crearPunto3D(p5a, 'red', 'P₁(0, 0, 0)'),
-                        crearPunto3D(p5b, 'blue', 'P₂(0, 0, 3)'),
-                        crearVector3D(v5a, 'red', 'v⃗₁(1, 0, 0)'),
-                        crearVector3D([v5b[0], v5b[1], v5b[2] + 3], 'blue', 'v⃗₂(0, 1, 0)')
-                    ];
-                    
-                    titulo = '🔀 Rectas Alabeadas';
-                    explicacion = `
-                        <strong>Rectas Alabeadas (Skew Lines):</strong><br>
-                        Las rectas <strong>no son paralelas y no se intersectan</strong>. Se "cruzan" en el espacio sin tocarse.<br><br>
-                        <strong>Condiciones:</strong><br>
-                        ❌ NO son paralelas: $\\vec{v}_1 \\times \\vec{v}_2 \\neq \\vec{0}$<br>
-                        ❌ NO se intersectan: sistema sin solución<br>
-                        ❌ NO están en el mismo plano (no coplanares)<br><br>
-                        <strong>En este ejemplo:</strong><br>
-                        • $l_1$: sobre el plano XY (z=0), dirección X<br>
-                        • $l_2$: plano paralelo (z=3), dirección Y<br>
-                        • Los vectores NO son paralelos<br>
-                        • Las rectas NUNCA se tocan<br>
-                        • Este es el caso del Punto 5 del examen
-                    `;
-                    break;
-
-                default:
-                    return;
-            }
-
-            // Crear el gráfico
-            const layout = {
-                ...layoutBase,
-                title: titulo
-            };
-
-            Plotly.newPlot('grafico3d', data, layout, {responsive: true});
-            
-            // Actualizar explicación
-            document.getElementById('explicacion-grafico').innerHTML = explicacion;
-            
-            // Renderizar LaTeX en la explicación
-            if (window.MathJax) {
-                MathJax.typesetPromise([document.getElementById('explicacion-grafico')]);
-            }
-        }
-
-        // Mostrar gráfico inicial al cargar la página
-        window.addEventListener('load', function() {
-            // Esperar un poco para que todo se cargue
+        // Animación de entrada suave
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
             setTimeout(() => {
-                mostrarGrafico('coincidentes');
-            }, 500);
+                document.body.style.transition = 'opacity 0.5s ease';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Easter egg: al hacer click en el logo
+        let clickCount = 0;
+        document.querySelector('.logo').addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 5) {
+                const message = document.createElement('div');
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: linear-gradient(135deg, var(--secondary-purple), var(--primary-purple));
+                    padding: 40px;
+                    border-radius: 20px;
+                    font-size: 2em;
+                    text-align: center;
+                    z-index: 9999;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                    animation: fadeInUp 0.5s ease;
+                `;
+                message.innerHTML = '¡Dory es la mejor! 💜🐠✨';
+                document.body.appendChild(message);
+                
+                setTimeout(() => {
+                    message.style.transition = 'opacity 0.5s ease';
+                    message.style.opacity = '0';
+                    setTimeout(() => message.remove(), 500);
+                }, 3000);
+                
+                clickCount = 0;
+            }
         });
     </script>
 </body>
 </html>
+
