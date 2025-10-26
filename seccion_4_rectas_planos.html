@@ -345,6 +345,300 @@
             </div>
         </div>
 
+        <div class="problema">
+            <h3>Ejercicio 2</h3>
+            <div class="enunciado">
+                Dados el plano $\pi: 2x - 5y + 9z = -4$ y la recta $l: \frac{4-x}{-2} = \frac{y-5}{1} = \frac{z+4}{5}$, verificar si:<br>
+                <strong>a.</strong> La recta es paralela al plano<br>
+                <strong>b.</strong> La recta es perpendicular al plano<br>
+                <strong>c.</strong> La recta está contenida en el plano<br>
+                <strong>d.</strong> La recta corta al plano
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar datos</strong>
+                    Plano: $\vec{n} = (2, -5, 9)$<br>
+                    Recta: $\frac{4-x}{-2} = \frac{y-5}{1} = \frac{z+4}{5}$ → $\frac{x-4}{2} = \frac{y-5}{1} = \frac{z+4}{5}$<br>
+                    Vector director: $\vec{v} = (2, 1, 5)$, punto $P(4, 5, -4)$
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Es paralela?</strong>
+                    La recta es paralela al plano si $\vec{n} \cdot \vec{v} = 0$
+                    <div class="formula">
+                        $$\vec{n} \cdot \vec{v} = (2)(2) + (-5)(1) + (9)(5) = 4 - 5 + 45 = 44 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO es paralela</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Es perpendicular?</strong>
+                    La recta es perpendicular si $\vec{v} = k \cdot \vec{n}$
+                    <div class="formula">
+                        $$\frac{2}{2} = 1, \quad \frac{1}{-5} = -0.2, \quad \frac{5}{9} \approx 0.56$$
+                        $$1 \neq -0.2 \neq 0.56$$
+                    </div>
+                    <span class="incorrecta">✗ NO es perpendicular</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) Verificar si el punto está en el plano</strong>
+                    <div class="formula">
+                        $$2(4) - 5(5) + 9(-4) = 8 - 25 - 36 = -53 \neq -4$$
+                    </div>
+                    El punto NO está en el plano, por lo tanto la recta NO está contenida.
+                </div>
+
+                <div class="paso">
+                    <strong>d) Encontrar el punto de corte</strong>
+                    Ecuaciones paramétricas: $x = 4 + 2t$, $y = 5 + t$, $z = -4 + 5t$<br>
+                    Sustituyendo en el plano:
+                    <div class="formula">
+                        $$2(4 + 2t) - 5(5 + t) + 9(-4 + 5t) = -4$$
+                        $$8 + 4t - 25 - 5t - 36 + 45t = -4$$
+                        $$44t - 53 = -4$$
+                        $$44t = 49 \implies t = \frac{49}{44}$$
+                    </div>
+                    <div class="formula">
+                        $$x = 4 + 2\left(\frac{49}{44}\right) = 4 + \frac{49}{22} = \frac{88 + 49}{22} = \frac{137}{22}$$
+                        $$y = 5 + \frac{49}{44} = \frac{220 + 49}{44} = \frac{269}{44}$$
+                        $$z = -4 + 5\left(\frac{49}{44}\right) = -4 + \frac{245}{44} = \frac{-176 + 245}{44} = \frac{69}{44}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    d) La recta <strong>SÍ corta al plano</strong><br>
+                    <strong>Punto de corte:</strong> $\left(\frac{137}{22}, \frac{269}{44}, \frac{69}{44}\right)$
+                </div>
+            </div>
+        </div>
+
+        <div class="problema">
+            <h3>Ejercicio 3</h3>
+            <div class="enunciado">
+                Dados el plano $\pi: -8x - 2y + z = -11$ y la recta $l: \frac{x+9}{-2} = \frac{3y-6}{9} = \frac{2-z}{-4}$, verificar si:<br>
+                <strong>a.</strong> La recta es paralela al plano<br>
+                <strong>b.</strong> La recta es perpendicular al plano<br>
+                <strong>c.</strong> La recta está contenida en el plano<br>
+                <strong>d.</strong> La recta corta al plano
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar datos</strong>
+                    Plano: $\vec{n} = (-8, -2, 1)$<br>
+                    Recta: $\frac{x+9}{-2} = \frac{3y-6}{9} = \frac{2-z}{-4}$<br>
+                    Simplificando: $\frac{x+9}{-2} = \frac{3(y-2)}{9} = \frac{-(z-2)}{-4}$<br>
+                    $\frac{x+9}{-2} = \frac{y-2}{3} = \frac{z-2}{4}$<br>
+                    Vector director: $\vec{v} = (-2, 3, 4)$, punto $P(-9, 2, 2)$
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Es paralela?</strong>
+                    La recta es paralela al plano si $\vec{n} \cdot \vec{v} = 0$
+                    <div class="formula">
+                        $$\vec{n} \cdot \vec{v} = (-8)(-2) + (-2)(3) + (1)(4) = 16 - 6 + 4 = 14 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO es paralela</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Es perpendicular?</strong>
+                    La recta es perpendicular si $\vec{v} = k \cdot \vec{n}$
+                    <div class="formula">
+                        $$\frac{-2}{-8} = \frac{1}{4}, \quad \frac{3}{-2} = -1.5, \quad \frac{4}{1} = 4$$
+                        $$\frac{1}{4} \neq -1.5 \neq 4$$
+                    </div>
+                    <span class="incorrecta">✗ NO es perpendicular</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) Verificar si el punto está en el plano</strong>
+                    <div class="formula">
+                        $$-8(-9) - 2(2) + (2) = 72 - 4 + 2 = 70 \neq -11$$
+                    </div>
+                    El punto NO está en el plano, por lo tanto la recta NO está contenida.
+                </div>
+
+                <div class="paso">
+                    <strong>d) Encontrar el punto de corte</strong>
+                    Ecuaciones paramétricas: $x = -9 - 2t$, $y = 2 + 3t$, $z = 2 + 4t$<br>
+                    Sustituyendo en el plano:
+                    <div class="formula">
+                        $$-8(-9 - 2t) - 2(2 + 3t) + (2 + 4t) = -11$$
+                        $$72 + 16t - 4 - 6t + 2 + 4t = -11$$
+                        $$14t + 70 = -11$$
+                        $$14t = -81 \implies t = -\frac{81}{14}$$
+                    </div>
+                    <div class="formula">
+                        $$x = -9 - 2\left(-\frac{81}{14}\right) = -9 + \frac{81}{7} = \frac{-63 + 81}{7} = \frac{18}{7}$$
+                        $$y = 2 + 3\left(-\frac{81}{14}\right) = 2 - \frac{243}{14} = \frac{28 - 243}{14} = -\frac{215}{14}$$
+                        $$z = 2 + 4\left(-\frac{81}{14}\right) = 2 - \frac{162}{7} = \frac{14 - 162}{7} = -\frac{148}{7}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    d) La recta <strong>SÍ corta al plano</strong><br>
+                    <strong>Punto de corte:</strong> $\left(\frac{18}{7}, -\frac{215}{14}, -\frac{148}{7}\right)$
+                </div>
+            </div>
+        </div>
+
+        <div class="problema">
+            <h3>Ejercicio 4</h3>
+            <div class="enunciado">
+                Dados el plano $\pi: 10x - 12y + 9z = 20$ y la recta $l: \frac{x+2}{5} = \frac{10y-5}{15} = \frac{2-z}{4}$, verificar si:<br>
+                <strong>a.</strong> La recta es paralela al plano<br>
+                <strong>b.</strong> La recta es perpendicular al plano<br>
+                <strong>c.</strong> La recta está contenida en el plano<br>
+                <strong>d.</strong> La recta corta al plano
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar datos</strong>
+                    Plano: $\vec{n} = (10, -12, 9)$<br>
+                    Recta: $\frac{x+2}{5} = \frac{10y-5}{15} = \frac{2-z}{4}$<br>
+                    Simplificando: $\frac{x+2}{5} = \frac{10(y-0.5)}{15} = \frac{-(z-2)}{4}$<br>
+                    $\frac{x+2}{5} = \frac{y-0.5}{1.5} = \frac{z-2}{-4}$<br>
+                    Multiplicando para simplificar: $\frac{x+2}{5} = \frac{2(y-0.5)}{3} = \frac{z-2}{-4}$<br>
+                    Vector director: $\vec{v} = (5, 1.5, -4) = (10, 3, -8)$ (multiplicando por 2)<br>
+                    Punto: $P(-2, 0.5, 2)$
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Es paralela?</strong>
+                    La recta es paralela al plano si $\vec{n} \cdot \vec{v} = 0$
+                    <div class="formula">
+                        $$\vec{n} \cdot \vec{v} = (10)(10) + (-12)(3) + (9)(-8) = 100 - 36 - 72 = -8 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO es paralela</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Es perpendicular?</strong>
+                    La recta es perpendicular si $\vec{v} = k \cdot \vec{n}$
+                    <div class="formula">
+                        $$\frac{10}{10} = 1, \quad \frac{3}{-12} = -0.25, \quad \frac{-8}{9} \approx -0.89$$
+                        $$1 \neq -0.25 \neq -0.89$$
+                    </div>
+                    <span class="incorrecta">✗ NO es perpendicular</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) Verificar si el punto está en el plano</strong>
+                    <div class="formula">
+                        $$10(-2) - 12(0.5) + 9(2) = -20 - 6 + 18 = -8 \neq 20$$
+                    </div>
+                    El punto NO está en el plano, por lo tanto la recta NO está contenida.
+                </div>
+
+                <div class="paso">
+                    <strong>d) Encontrar el punto de corte</strong>
+                    Ecuaciones paramétricas: $x = -2 + 5t$, $y = 0.5 + 1.5t$, $z = 2 - 4t$<br>
+                    Sustituyendo en el plano:
+                    <div class="formula">
+                        $$10(-2 + 5t) - 12(0.5 + 1.5t) + 9(2 - 4t) = 20$$
+                        $$-20 + 50t - 6 - 18t + 18 - 36t = 20$$
+                        $$-4t - 8 = 20$$
+                        $$-4t = 28 \implies t = -7$$
+                    </div>
+                    <div class="formula">
+                        $$x = -2 + 5(-7) = -2 - 35 = -37$$
+                        $$y = 0.5 + 1.5(-7) = 0.5 - 10.5 = -10$$
+                        $$z = 2 - 4(-7) = 2 + 28 = 30$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    d) La recta <strong>SÍ corta al plano</strong><br>
+                    <strong>Punto de corte:</strong> $(-37, -10, 30)$
+                </div>
+            </div>
+        </div>
+
+        <div class="problema">
+            <h3>Ejercicio 5</h3>
+            <div class="enunciado">
+                Dados el plano $\pi: 2x - 8y + 6z = -4$ y la recta $l: \frac{x+8}{4} = \frac{y+1}{6} = \frac{z+5}{-1}$, verificar si:<br>
+                <strong>a.</strong> La recta es paralela al plano<br>
+                <strong>b.</strong> La recta es perpendicular al plano<br>
+                <strong>c.</strong> La recta está contenida en el plano<br>
+                <strong>d.</strong> La recta corta al plano
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar datos</strong>
+                    Plano: $\vec{n} = (2, -8, 6)$<br>
+                    Recta: $\frac{x+8}{4} = \frac{y+1}{6} = \frac{z+5}{-1}$<br>
+                    Vector director: $\vec{v} = (4, 6, -1)$, punto $P(-8, -1, -5)$
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Es paralela?</strong>
+                    La recta es paralela al plano si $\vec{n} \cdot \vec{v} = 0$
+                    <div class="formula">
+                        $$\vec{n} \cdot \vec{v} = (2)(4) + (-8)(6) + (6)(-1) = 8 - 48 - 6 = -46 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO es paralela</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Es perpendicular?</strong>
+                    La recta es perpendicular si $\vec{v} = k \cdot \vec{n}$
+                    <div class="formula">
+                        $$\frac{4}{2} = 2, \quad \frac{6}{-8} = -0.75, \quad \frac{-1}{6} \approx -0.17$$
+                        $$2 \neq -0.75 \neq -0.17$$
+                    </div>
+                    <span class="incorrecta">✗ NO es perpendicular</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) Verificar si el punto está en el plano</strong>
+                    <div class="formula">
+                        $$2(-8) - 8(-1) + 6(-5) = -16 + 8 - 30 = -38 \neq -4$$
+                    </div>
+                    El punto NO está en el plano, por lo tanto la recta NO está contenida.
+                </div>
+
+                <div class="paso">
+                    <strong>d) Encontrar el punto de corte</strong>
+                    Ecuaciones paramétricas: $x = -8 + 4t$, $y = -1 + 6t$, $z = -5 - t$<br>
+                    Sustituyendo en el plano:
+                    <div class="formula">
+                        $$2(-8 + 4t) - 8(-1 + 6t) + 6(-5 - t) = -4$$
+                        $$-16 + 8t + 8 - 48t - 30 - 6t = -4$$
+                        $$-46t - 38 = -4$$
+                        $$-46t = 34 \implies t = -\frac{34}{46} = -\frac{17}{23}$$
+                    </div>
+                    <div class="formula">
+                        $$x = -8 + 4\left(-\frac{17}{23}\right) = -8 - \frac{68}{23} = \frac{-184 - 68}{23} = -\frac{252}{23}$$
+                        $$y = -1 + 6\left(-\frac{17}{23}\right) = -1 - \frac{102}{23} = \frac{-23 - 102}{23} = -\frac{125}{23}$$
+                        $$z = -5 - \left(-\frac{17}{23}\right) = -5 + \frac{17}{23} = \frac{-115 + 17}{23} = -\frac{98}{23}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    d) La recta <strong>SÍ corta al plano</strong><br>
+                    <strong>Punto de corte:</strong> $\left(-\frac{252}{23}, -\frac{125}{23}, -\frac{98}{23}\right)$
+                </div>
+            </div>
+        </div>
+
         <div class="nota">
             <strong>💡 Conceptos Clave:</strong><br><br>
             <strong>1. Recta paralela al plano:</strong> $\vec{n} \cdot \vec{v} = 0$ (el vector director es perpendicular al vector normal)<br><br>
