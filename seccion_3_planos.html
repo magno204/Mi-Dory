@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sección 3: Posición Relativa entre Planos - Geometría Vectorial</title>
+    
+    <!-- MathJax para renderizar LaTeX -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.8em;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            border-bottom: 3px solid #7e22ce;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #a78bfa;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #2a2a40 0%, #3a3a50 100%);
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: #60a5fa;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            padding-left: 15px;
+            border-left: 3px solid #a78bfa;
+        }
+
+        h4 {
+            color: #fbbf24;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .problema {
+            background: #16213e;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .problema:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 12px 24px rgba(0, 212, 255, 0.2);
+        }
+
+        .enunciado {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 1.1em;
+            border: 1px solid #4c5fff;
+        }
+
+        .desarrollo {
+            background: #0f1729;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 1px solid #2a2a40;
+        }
+
+        .paso {
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 4px solid #a78bfa;
+        }
+
+        .paso strong {
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .formula {
+            background: #2a2a40;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #4c5fff;
+        }
+
+        .respuesta {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 2px solid #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .nota {
+            background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+            border-left: 5px solid #fbbf24;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0;
+            padding: 25px;
+            background: #16213e;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+        }
+
+        button {
+            background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #a855f7 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.5);
+        }
+
+        .correcta {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .incorrecta {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #9ca3af;
+            border-top: 2px solid #2a2a40;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7e22ce;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9333ea;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .controls {
+                display: none;
+            }
+            button {
+                display: none;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problema {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔶 Sección 3: Posición Relativa entre Planos<br>Geometría Vectorial</h1>
+
+        <div class="nota" style="text-align: center;">
+            <strong>👨‍🏫 Resuelto por su Profesor de Geometría Vectorial</strong><br>
+            Todas las soluciones están desarrolladas paso a paso con explicaciones detalladas.<br>
+            Este documento utiliza <strong>MathJax</strong> para renderizar fórmulas matemáticas en LaTeX.
+        </div>
+
+        <div class="controls">
+            <button onclick="window.location.href='solucion_taller_parcial.html'" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">⬅️ Volver al Inicio</button>
+            <button onclick="window.print()">🖨️ Imprimir</button>
+            <button onclick="mostrarTodo()">👁️ Mostrar Todo</button>
+            <button onclick="ocultarTodo()">🔒 Ocultar Todo</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir al Inicio</button>
+        </div>
+
+        <!-- SECCIÓN 3: POSICIÓN RELATIVA ENTRE PLANOS -->
+        <h2>🔶 Sección 3: Posición Relativa entre Planos</h2>
+
+        <!-- Problema 3.1 -->
+        <div class="problema">
+            <h3>Ejercicio 1</h3>
+            <div class="enunciado">
+                Dados los planos $\pi_{1}: 3x + 4y - 8z = 6$ y $\pi_{2}: -5x - 7y + 2z = -5$, verificar si:<br>
+                <strong>a.</strong> Son paralelos &nbsp;&nbsp; <strong>b.</strong> Son perpendiculares &nbsp;&nbsp; <strong>c.</strong> Son coincidentes<br>
+                <strong>d.</strong> Se cortan. En caso de que se corten, encuentre la ecuación <strong>paramétrica</strong> de la recta de corte.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar vectores normales</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 = (3, 4, -8)$$
+                        $$\vec{n}_2 = (-5, -7, 2)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Son paralelos?</strong>
+                    Los planos son paralelos si $\vec{n}_1 = k \cdot \vec{n}_2$
+                    <div class="formula">
+                        $$\frac{3}{-5} = -0.6, \quad \frac{4}{-7} \approx -0.571, \quad \frac{-8}{2} = -4$$
+                    </div>
+                    <span class="incorrecta">✗ NO son paralelos</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Son perpendiculares?</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 \cdot \vec{n}_2 = (3)(-5) + (4)(-7) + (-8)(2)$$
+                        $$= -15 - 28 - 16 = -59 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO son perpendiculares</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) ¿Son coincidentes?</strong>
+                    Como no son paralelos, no pueden ser coincidentes.<br>
+                    <span class="incorrecta">✗ NO son coincidentes</span>
+                </div>
+
+                <div class="paso">
+                    <strong>d) Se cortan - Ecuación paramétrica de la recta</strong>
+                    El vector director de la recta es $\vec{v} = \vec{n}_1 \times \vec{n}_2$
+                    <div class="formula">
+                        $$\vec{v} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 3 & 4 & -8 \\ -5 & -7 & 2 \end{vmatrix}$$
+                        $$\vec{i}: (4)(2) - (-8)(-7) = 8 - 56 = -48$$
+                        $$\vec{j}: -[(3)(2) - (-8)(-5)] = -[6 - 40] = 34$$
+                        $$\vec{k}: (3)(-7) - (4)(-5) = -21 + 20 = -1$$
+                        $$\vec{v} = (-48, 34, -1)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Encontrar un punto en la recta</strong>
+                    Hacemos $z = 0$ y resolvemos el sistema:
+                    <div class="formula">
+                        $$\begin{cases} 3x + 4y = 6 \\ -5x - 7y = -5 \end{cases}$$
+                    </div>
+                    De la primera: $x = \frac{6 - 4y}{3}$<br>
+                    Sustituyendo en la segunda:
+                    <div class="formula">
+                        $$-5\left(\frac{6 - 4y}{3}\right) - 7y = -5$$
+                        $$\frac{-30 + 20y}{3} - 7y = -5$$
+                        $$-30 + 20y - 21y = -15$$
+                        $$-y = 15 \implies y = -15$$
+                        $$x = \frac{6 - 4(-15)}{3} = \frac{66}{3} = 22$$
+                    </div>
+                    Punto: $P(22, -15, 0)$
+                </div>
+
+                <div class="paso">
+                    <strong>Ecuación paramétrica</strong>
+                    <div class="formula">
+                        $$\begin{cases} x = 22 - 48t \\ y = -15 + 34t \\ z = -t \end{cases}$$
+                    </div>
+                    O simplificada (con vector $\vec{v} = (48, -34, 1)$):
+                    <div class="formula">
+                        $$\begin{cases} x = 22 + 48t \\ y = -15 - 34t \\ z = t \end{cases}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    a) NO son paralelos &nbsp; b) NO son perpendiculares &nbsp; c) NO son coincidentes<br>
+                    d) <strong>SÍ se cortan</strong><br>
+                    <strong>Ecuación paramétrica:</strong> $\begin{cases} x = 22 + 48t \\ y = -15 - 34t \\ z = t \end{cases}$
+                </div>
+            </div>
+        </div>
+
+        <!-- Problema 3.2 -->
+        <div class="problema">
+            <h3>Ejercicio 2</h3>
+            <div class="enunciado">
+                Dados los planos $\pi_{1}: -4x + 6y - 9z = -10$ y $\pi_{2}: -x + 5y - 12z = -5$, verificar si:<br>
+                <strong>a.</strong> Son paralelos &nbsp;&nbsp; <strong>b.</strong> Son perpendiculares &nbsp;&nbsp; <strong>c.</strong> Son coincidentes<br>
+                <strong>d.</strong> Se cortan. En caso de que se corten, encuentre la ecuación <strong>simétrica</strong> de la recta de corte.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Vectores normales</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 = (-4, 6, -9), \quad \vec{n}_2 = (-1, 5, -12)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Son paralelos?</strong>
+                    <div class="formula">
+                        $$\frac{-4}{-1} = 4, \quad \frac{6}{5} = 1.2, \quad \frac{-9}{-12} = 0.75$$
+                    </div>
+                    <span class="incorrecta">✗ NO son paralelos</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Son perpendiculares?</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 \cdot \vec{n}_2 = (-4)(-1) + (6)(5) + (-9)(-12)$$
+                        $$= 4 + 30 + 108 = 142 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO son perpendiculares</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) ¿Son coincidentes?</strong>
+                    <span class="incorrecta">✗ NO son coincidentes</span>
+                </div>
+
+                <div class="paso">
+                    <strong>d) Vector director de la recta</strong>
+                    <div class="formula">
+                        $$\vec{v} = \vec{n}_1 \times \vec{n}_2 = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ -4 & 6 & -9 \\ -1 & 5 & -12 \end{vmatrix}$$
+                        $$\vec{i}: (6)(-12) - (-9)(5) = -72 + 45 = -27$$
+                        $$\vec{j}: -[(-4)(-12) - (-9)(-1)] = -[48 - 9] = -39$$
+                        $$\vec{k}: (-4)(5) - (6)(-1) = -20 + 6 = -14$$
+                        $$\vec{v} = (-27, -39, -14)$$
+                    </div>
+                    Simplificado: $\vec{v} = (27, 39, 14)$
+                </div>
+
+                <div class="paso">
+                    <strong>Encontrar un punto</strong>
+                    Hacemos $z = 0$:
+                    <div class="formula">
+                        $$\begin{cases} -4x + 6y = -10 \\ -x + 5y = -5 \end{cases}$$
+                    </div>
+                    De la segunda: $x = 5y + 5$<br>
+                    Sustituyendo:
+                    <div class="formula">
+                        $$-4(5y + 5) + 6y = -10$$
+                        $$-20y - 20 + 6y = -10$$
+                        $$-14y = 10 \implies y = -\frac{5}{7}$$
+                        $$x = 5(-\frac{5}{7}) + 5 = -\frac{25}{7} + \frac{35}{7} = \frac{10}{7}$$
+                    </div>
+                    Punto: $P\left(\frac{10}{7}, -\frac{5}{7}, 0\right)$
+                </div>
+
+                <div class="paso">
+                    <strong>Ecuación simétrica</strong>
+                    <div class="formula">
+                        $$\frac{x - \frac{10}{7}}{27} = \frac{y + \frac{5}{7}}{39} = \frac{z}{14}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    a) NO son paralelos &nbsp; b) NO son perpendiculares &nbsp; c) NO son coincidentes<br>
+                    d) <strong>SÍ se cortan</strong><br>
+                    <strong>Ecuación simétrica:</strong> $\displaystyle\frac{x - \frac{10}{7}}{27} = \frac{y + \frac{5}{7}}{39} = \frac{z}{14}$
+                </div>
+            </div>
+        </div>
+
+        <!-- Problema 3.3 -->
+        <div class="problema">
+            <h3>Ejercicio 3</h3>
+            <div class="enunciado">
+                Dados los planos $\pi_{1}: -9x - 3y - z = 6$ y $\pi_{2}: 10x + 5y - 8z = -15$, verificar si:<br>
+                <strong>a.</strong> Son paralelos &nbsp;&nbsp; <strong>b.</strong> Son perpendiculares &nbsp;&nbsp; <strong>c.</strong> Son coincidentes<br>
+                <strong>d.</strong> Se cortan. En caso de que se corten, encuentre la ecuación <strong>paramétrica</strong> de la recta de corte.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar vectores normales</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 = (-9, -3, -1)$$
+                        $$\vec{n}_2 = (10, 5, -8)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Son paralelos?</strong>
+                    Los planos son paralelos si $\vec{n}_1 = k \cdot \vec{n}_2$
+                    <div class="formula">
+                        $$\frac{-9}{10} = -0.9, \quad \frac{-3}{5} = -0.6, \quad \frac{-1}{-8} = 0.125$$
+                    </div>
+                    <span class="incorrecta">✗ NO son paralelos (las razones no son iguales)</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Son perpendiculares?</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 \cdot \vec{n}_2 = (-9)(10) + (-3)(5) + (-1)(-8)$$
+                        $$= -90 - 15 + 8 = -97 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO son perpendiculares</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) ¿Son coincidentes?</strong>
+                    Como no son paralelos, no pueden ser coincidentes.<br>
+                    <span class="incorrecta">✗ NO son coincidentes</span>
+                </div>
+
+                <div class="paso">
+                    <strong>d) Se cortan - Ecuación paramétrica de la recta</strong>
+                    El vector director de la recta es $\vec{v} = \vec{n}_1 \times \vec{n}_2$
+                    <div class="formula">
+                        $$\vec{v} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ -9 & -3 & -1 \\ 10 & 5 & -8 \end{vmatrix}$$
+                        $$\vec{i}: (-3)(-8) - (-1)(5) = 24 + 5 = 29$$
+                        $$\vec{j}: -[(-9)(-8) - (-1)(10)] = -[72 + 10] = -82$$
+                        $$\vec{k}: (-9)(5) - (-3)(10) = -45 + 30 = -15$$
+                        $$\vec{v} = (29, -82, -15)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Encontrar un punto en la recta</strong>
+                    Hacemos $z = 0$ y resolvemos el sistema:
+                    <div class="formula">
+                        $$\begin{cases} -9x - 3y = 6 \\ 10x + 5y = -15 \end{cases}$$
+                    </div>
+                    De la primera: $-3y = 6 + 9x \implies y = -2 - 3x$<br>
+                    Sustituyendo en la segunda:
+                    <div class="formula">
+                        $$10x + 5(-2 - 3x) = -15$$
+                        $$10x - 10 - 15x = -15$$
+                        $$-5x = -5 \implies x = 1$$
+                        $$y = -2 - 3(1) = -5$$
+                    </div>
+                    Punto: $P(1, -5, 0)$
+                </div>
+
+                <div class="paso">
+                    <strong>Ecuación paramétrica</strong>
+                    <div class="formula">
+                        $$\begin{cases} x = 1 + 29t \\ y = -5 - 82t \\ z = -15t \end{cases}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    a) NO son paralelos &nbsp; b) NO son perpendiculares &nbsp; c) NO son coincidentes<br>
+                    d) <strong>SÍ se cortan</strong><br>
+                    <strong>Ecuación paramétrica:</strong> $\begin{cases} x = 1 + 29t \\ y = -5 - 82t \\ z = -15t \end{cases}$
+                </div>
+            </div>
+        </div>
+
+        <!-- Problema 3.4 -->
+        <div class="problema">
+            <h3>Ejercicio 4</h3>
+            <div class="enunciado">
+                Dados los planos $\pi_{1}: 9x + 8y - 2z = 6$ y $\pi_{2}: -3x + 11y + 3z = 21$, verificar si:<br>
+                <strong>a.</strong> Son paralelos &nbsp;&nbsp; <strong>b.</strong> Son perpendiculares &nbsp;&nbsp; <strong>c.</strong> Son coincidentes<br>
+                <strong>d.</strong> Se cortan. En caso de que se corten, encuentre la ecuación <strong>paramétrica</strong> de la recta de corte.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar vectores normales</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 = (9, 8, -2)$$
+                        $$\vec{n}_2 = (-3, 11, 3)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Son paralelos?</strong>
+                    Los planos son paralelos si $\vec{n}_1 = k \cdot \vec{n}_2$
+                    <div class="formula">
+                        $$\frac{9}{-3} = -3, \quad \frac{8}{11} \approx 0.727, \quad \frac{-2}{3} \approx -0.667$$
+                    </div>
+                    <span class="incorrecta">✗ NO son paralelos (las razones no son iguales)</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Son perpendiculares?</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 \cdot \vec{n}_2 = (9)(-3) + (8)(11) + (-2)(3)$$
+                        $$= -27 + 88 - 6 = 55 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO son perpendiculares</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) ¿Son coincidentes?</strong>
+                    Como no son paralelos, no pueden ser coincidentes.<br>
+                    <span class="incorrecta">✗ NO son coincidentes</span>
+                </div>
+
+                <div class="paso">
+                    <strong>d) Se cortan - Ecuación paramétrica de la recta</strong>
+                    El vector director de la recta es $\vec{v} = \vec{n}_1 \times \vec{n}_2$
+                    <div class="formula">
+                        $$\vec{v} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 9 & 8 & -2 \\ -3 & 11 & 3 \end{vmatrix}$$
+                        $$\vec{i}: (8)(3) - (-2)(11) = 24 + 22 = 46$$
+                        $$\vec{j}: -[(9)(3) - (-2)(-3)] = -[27 - 6] = -21$$
+                        $$\vec{k}: (9)(11) - (8)(-3) = 99 + 24 = 123$$
+                        $$\vec{v} = (46, -21, 123)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Encontrar un punto en la recta</strong>
+                    Hacemos $z = 0$ y resolvemos el sistema:
+                    <div class="formula">
+                        $$\begin{cases} 9x + 8y = 6 \\ -3x + 11y = 21 \end{cases}$$
+                    </div>
+                    De la segunda: $-3x = 21 - 11y \implies x = -7 + \frac{11y}{3}$<br>
+                    Sustituyendo en la primera:
+                    <div class="formula">
+                        $$9\left(-7 + \frac{11y}{3}\right) + 8y = 6$$
+                        $$-63 + 33y + 8y = 6$$
+                        $$41y = 69 \implies y = \frac{69}{41}$$
+                        $$x = -7 + \frac{11 \cdot 69}{3 \cdot 41} = -7 + \frac{759}{123} = -7 + \frac{253}{41} = \frac{-287 + 253}{41} = -\frac{34}{41}$$
+                    </div>
+                    Punto: $P\left(-\frac{34}{41}, \frac{69}{41}, 0\right)$
+                </div>
+
+                <div class="paso">
+                    <strong>Ecuación paramétrica</strong>
+                    <div class="formula">
+                        $$\begin{cases} x = -\frac{34}{41} + 46t \\ y = \frac{69}{41} - 21t \\ z = 123t \end{cases}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    a) NO son paralelos &nbsp; b) NO son perpendiculares &nbsp; c) NO son coincidentes<br>
+                    d) <strong>SÍ se cortan</strong><br>
+                    <strong>Ecuación paramétrica:</strong> $\begin{cases} x = -\frac{34}{41} + 46t \\ y = \frac{69}{41} - 21t \\ z = 123t \end{cases}$
+                </div>
+            </div>
+        </div>
+
+        <!-- Problema 3.5 -->
+        <div class="problema">
+            <h3>Ejercicio 5</h3>
+            <div class="enunciado">
+                Dados los planos $\pi_{1}: 6x + 13y - 7z = 6$ y $\pi_{2}: 7x - 7y + 9z = 20$, verificar si:<br>
+                <strong>a.</strong> Son paralelos &nbsp;&nbsp; <strong>b.</strong> Son perpendiculares &nbsp;&nbsp; <strong>c.</strong> Son coincidentes<br>
+                <strong>d.</strong> Se cortan. En caso de que se corten, encuentre la ecuación <strong>simétrica</strong> de la recta de corte.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar vectores normales</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 = (6, 13, -7)$$
+                        $$\vec{n}_2 = (7, -7, 9)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Son paralelos?</strong>
+                    Los planos son paralelos si $\vec{n}_1 = k \cdot \vec{n}_2$
+                    <div class="formula">
+                        $$\frac{6}{7} \approx 0.857, \quad \frac{13}{-7} \approx -1.857, \quad \frac{-7}{9} \approx -0.778$$
+                    </div>
+                    <span class="incorrecta">✗ NO son paralelos (las razones no son iguales)</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Son perpendiculares?</strong>
+                    <div class="formula">
+                        $$\vec{n}_1 \cdot \vec{n}_2 = (6)(7) + (13)(-7) + (-7)(9)$$
+                        $$= 42 - 91 - 63 = -112 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO son perpendiculares</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c) ¿Son coincidentes?</strong>
+                    Como no son paralelos, no pueden ser coincidentes.<br>
+                    <span class="incorrecta">✗ NO son coincidentes</span>
+                </div>
+
+                <div class="paso">
+                    <strong>d) Se cortan - Vector director de la recta</strong>
+                    El vector director de la recta es $\vec{v} = \vec{n}_1 \times \vec{n}_2$
+                    <div class="formula">
+                        $$\vec{v} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 6 & 13 & -7 \\ 7 & -7 & 9 \end{vmatrix}$$
+                        $$\vec{i}: (13)(9) - (-7)(-7) = 117 - 49 = 68$$
+                        $$\vec{j}: -[(6)(9) - (-7)(7)] = -[54 + 49] = -103$$
+                        $$\vec{k}: (6)(-7) - (13)(7) = -42 - 91 = -133$$
+                        $$\vec{v} = (68, -103, -133)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Encontrar un punto en la recta</strong>
+                    Hacemos $z = 0$ y resolvemos el sistema:
+                    <div class="formula">
+                        $$\begin{cases} 6x + 13y = 6 \\ 7x - 7y = 20 \end{cases}$$
+                    </div>
+                    De la segunda: $7x = 20 + 7y \implies x = \frac{20 + 7y}{7}$<br>
+                    Sustituyendo en la primera:
+                    <div class="formula">
+                        $$6\left(\frac{20 + 7y}{7}\right) + 13y = 6$$
+                        $$\frac{120 + 42y}{7} + 13y = 6$$
+                        $$120 + 42y + 91y = 42$$
+                        $$133y = -78 \implies y = -\frac{78}{133}$$
+                        $$x = \frac{20 + 7(-78/133)}{7} = \frac{20 - 546/133}{7} = \frac{2660/133 - 546/133}{7} = \frac{2114/133}{7} = \frac{2114}{931} = \frac{302}{133}$$
+                    </div>
+                    Punto: $P\left(\frac{302}{133}, -\frac{78}{133}, 0\right)$
+                </div>
+
+                <div class="paso">
+                    <strong>Ecuación simétrica</strong>
+                    <div class="formula">
+                        $$\frac{x - \frac{302}{133}}{68} = \frac{y + \frac{78}{133}}{-103} = \frac{z}{-133}$$
+                    </div>
+                    O de forma simplificada:
+                    <div class="formula">
+                        $$\frac{x - \frac{302}{133}}{68} = \frac{y + \frac{78}{133}}{-103} = \frac{z}{-133}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    a) NO son paralelos &nbsp; b) NO son perpendiculares &nbsp; c) NO son coincidentes<br>
+                    d) <strong>SÍ se cortan</strong><br>
+                    <strong>Ecuación simétrica:</strong> $\displaystyle\frac{x - \frac{302}{133}}{68} = \frac{y + \frac{78}{133}}{-103} = \frac{z}{-133}$
+                </div>
+            </div>
+        </div>
+
+        <div class="nota">
+            <strong>💡 Nota del Profesor:</strong> Estos ejercicios demuestran cómo analizar la posición relativa entre dos planos en el espacio. Recuerda que dos planos diferentes pueden ser paralelos (no se cortan), perpendiculares (se cortan en ángulo recto), o simplemente intersectarse en una recta.
+        </div>
+
+        <div class="controls">
+            <button onclick="window.location.href='solucion_taller_parcial.html'" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">⬅️ Volver al Inicio</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir Arriba</button>
+            <button onclick="window.print()">🖨️ Imprimir Documento</button>
+        </div>
+
+        <footer>
+            <p>📐 <strong>Sección 3: Posición Relativa entre Planos - Geometría Vectorial</strong></p>
+            <p>Soluciones desarrolladas por su Profesor</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Documento generado el: <span id="fecha"></span></p>
+            <p style="font-size: 0.85em; margin-top: 5px;">Todas las fórmulas matemáticas renderizadas con MathJax</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Funciones para mostrar/ocultar desarrollos
+        function mostrarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'block';
+            });
+        }
+
+        function ocultarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'none';
+            });
+        }
+
+        // Agregar interactividad a los problemas (click en título para expandir/contraer)
+        document.querySelectorAll('.problema h3').forEach(titulo => {
+            titulo.style.cursor = 'pointer';
+            titulo.style.userSelect = 'none';
+            titulo.addEventListener('click', function() {
+                const desarrollo = this.parentElement.querySelector('.desarrollo');
+                if (desarrollo) {
+                    desarrollo.style.display = desarrollo.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Animación de entrada
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.problema').forEach(problema => {
+            problema.style.opacity = '0';
+            problema.style.transform = 'translateY(30px)';
+            problema.style.transition = 'all 0.6s ease-out';
+            observer.observe(problema);
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sección 4: Posición Relativa entre Rectas y Planos - Geometría Vectorial</title>
+    
+    <!-- MathJax para renderizar LaTeX -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.8em;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            border-bottom: 3px solid #7e22ce;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #a78bfa;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #2a2a40 0%, #3a3a50 100%);
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: #60a5fa;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            padding-left: 15px;
+            border-left: 3px solid #a78bfa;
+        }
+
+        h4 {
+            color: #fbbf24;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .problema {
+            background: #16213e;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .problema:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 12px 24px rgba(0, 212, 255, 0.2);
+        }
+
+        .enunciado {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 1.1em;
+            border: 1px solid #4c5fff;
+        }
+
+        .desarrollo {
+            background: #0f1729;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 1px solid #2a2a40;
+        }
+
+        .paso {
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 4px solid #a78bfa;
+        }
+
+        .paso strong {
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .formula {
+            background: #2a2a40;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #4c5fff;
+        }
+
+        .respuesta {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 2px solid #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .nota {
+            background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+            border-left: 5px solid #fbbf24;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0;
+            padding: 25px;
+            background: #16213e;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+        }
+
+        button {
+            background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #a855f7 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.5);
+        }
+
+        .correcta {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .incorrecta {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #9ca3af;
+            border-top: 2px solid #2a2a40;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7e22ce;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9333ea;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .controls {
+                display: none;
+            }
+            button {
+                display: none;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problema {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔹 Sección 4: Posición Relativa entre Rectas y Planos<br>Geometría Vectorial</h1>
+
+        <div class="nota" style="text-align: center;">
+            <strong>👨‍🏫 Resuelto por su Profesor de Geometría Vectorial</strong><br>
+            Todas las soluciones están desarrolladas paso a paso con explicaciones detalladas.<br>
+            Este documento utiliza <strong>MathJax</strong> para renderizar fórmulas matemáticas en LaTeX.
+        </div>
+
+        <div class="controls">
+            <button onclick="window.location.href='solucion_taller_parcial.html'" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">⬅️ Volver al Inicio</button>
+            <button onclick="window.print()">🖨️ Imprimir</button>
+            <button onclick="mostrarTodo()">👁️ Mostrar Todo</button>
+            <button onclick="ocultarTodo()">🔒 Ocultar Todo</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir al Inicio</button>
+        </div>
+
+        <!-- SECCIÓN 4: POSICIÓN RELATIVA ENTRE RECTAS Y PLANOS -->
+        <h2>🔹 Sección 4: Posición Relativa entre Rectas y Planos</h2>
+
+        <div class="problema">
+            <h3>Ejemplo: Ejercicio 1</h3>
+            <div class="enunciado">
+                Dados el plano $\pi: 3x + 4y - 8z = 6$ y la recta $l: \frac{x-5}{-4} = \frac{y-3}{7} = \frac{7-z}{-3}$, verificar si:<br>
+                <strong>a.</strong> La recta es paralela al plano<br>
+                <strong>b.</strong> La recta es perpendicular al plano<br>
+                <strong>c.</strong> La recta está contenida en el plano<br>
+                <strong>d.</strong> La recta corta al plano
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Identificar datos</strong>
+                    Plano: $\vec{n} = (3, 4, -8)$<br>
+                    Recta: $\frac{x-5}{-4} = \frac{y-3}{7} = \frac{z-7}{3}$ → $\vec{v} = (-4, 7, 3)$, punto $P(5, 3, 7)$
+                </div>
+
+                <div class="paso">
+                    <strong>a) ¿Es paralela?</strong>
+                    La recta es paralela al plano si $\vec{n} \cdot \vec{v} = 0$
+                    <div class="formula">
+                        $$\vec{n} \cdot \vec{v} = (3)(-4) + (4)(7) + (-8)(3) = -12 + 28 - 24 = -8 \neq 0$$
+                    </div>
+                    <span class="incorrecta">✗ NO es paralela</span>
+                </div>
+
+                <div class="paso">
+                    <strong>b) ¿Es perpendicular?</strong>
+                    La recta es perpendicular si $\vec{v} = k \cdot \vec{n}$
+                    <div class="formula">
+                        $$\frac{-4}{3} \neq \frac{7}{4} \neq \frac{3}{-8}$$
+                    </div>
+                    <span class="incorrecta">✗ NO es perpendicular</span>
+                </div>
+
+                <div class="paso">
+                    <strong>c y d) Verificar si el punto está en el plano</strong>
+                    <div class="formula">
+                        $$3(5) + 4(3) - 8(7) = 15 + 12 - 56 = -29 \neq 6$$
+                    </div>
+                    El punto NO está en el plano, por lo tanto la recta NO está contenida.
+                </div>
+
+                <div class="paso">
+                    <strong>Encontrar el punto de corte</strong>
+                    Ecuaciones paramétricas: $x = 5 - 4t$, $y = 3 + 7t$, $z = 7 + 3t$<br>
+                    Sustituyendo en el plano:
+                    <div class="formula">
+                        $$3(5 - 4t) + 4(3 + 7t) - 8(7 + 3t) = 6$$
+                        $$15 - 12t + 12 + 28t - 56 - 24t = 6$$
+                        $$-8t - 29 = 6$$
+                        $$-8t = 35 \implies t = -\frac{35}{8}$$
+                    </div>
+                    <div class="formula">
+                        $$x = 5 - 4(-\frac{35}{8}) = 5 + \frac{35}{2} = \frac{45}{2}$$
+                        $$y = 3 + 7(-\frac{35}{8}) = 3 - \frac{245}{8} = -\frac{221}{8}$$
+                        $$z = 7 + 3(-\frac{35}{8}) = 7 - \frac{105}{8} = -\frac{49}{8}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong><br>
+                    d) La recta <strong>SÍ corta al plano</strong><br>
+                    <strong>Punto de corte:</strong> $\left(\frac{45}{2}, -\frac{221}{8}, -\frac{49}{8}\right)$
+                </div>
+            </div>
+        </div>
+
+        <div class="nota">
+            <strong>💡 Conceptos Clave:</strong><br><br>
+            <strong>1. Recta paralela al plano:</strong> $\vec{n} \cdot \vec{v} = 0$ (el vector director es perpendicular al vector normal)<br><br>
+            <strong>2. Recta perpendicular al plano:</strong> $\vec{v} = k \cdot \vec{n}$ (el vector director es paralelo al vector normal)<br><br>
+            <strong>3. Recta contenida en el plano:</strong> $\vec{n} \cdot \vec{v} = 0$ Y un punto de la recta debe estar en el plano<br><br>
+            <strong>4. Recta corta al plano:</strong> Cuando no se cumplen las condiciones anteriores, la recta intersecta al plano en un único punto
+        </div>
+
+        <div class="controls">
+            <button onclick="window.location.href='solucion_taller_parcial.html'" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">⬅️ Volver al Inicio</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir Arriba</button>
+            <button onclick="window.print()">🖨️ Imprimir Documento</button>
+        </div>
+
+        <footer>
+            <p>📐 <strong>Sección 4: Posición Relativa entre Rectas y Planos - Geometría Vectorial</strong></p>
+            <p>Soluciones desarrolladas por su Profesor</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Documento generado el: <span id="fecha"></span></p>
+            <p style="font-size: 0.85em; margin-top: 5px;">Todas las fórmulas matemáticas renderizadas con MathJax</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Funciones para mostrar/ocultar desarrollos
+        function mostrarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'block';
+            });
+        }
+
+        function ocultarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'none';
+            });
+        }
+
+        // Agregar interactividad a los problemas (click en título para expandir/contraer)
+        document.querySelectorAll('.problema h3').forEach(titulo => {
+            titulo.style.cursor = 'pointer';
+            titulo.style.userSelect = 'none';
+            titulo.addEventListener('click', function() {
+                const desarrollo = this.parentElement.querySelector('.desarrollo');
+                if (desarrollo) {
+                    desarrollo.style.display = desarrollo.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Animación de entrada
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.problema').forEach(problema => {
+            problema.style.opacity = '0';
+            problema.style.transform = 'translateY(30px)';
+            problema.style.transition = 'all 0.6s ease-out';
+            observer.observe(problema);
+        });
+    </script>
+</body>
+</html>
+

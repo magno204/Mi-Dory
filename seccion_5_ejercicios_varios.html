@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sección 5: Ejercicios Varios - Geometría Vectorial</title>
+    
+    <!-- MathJax para renderizar LaTeX -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.8em;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            border-bottom: 3px solid #7e22ce;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #a78bfa;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #2a2a40 0%, #3a3a50 100%);
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: #60a5fa;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            padding-left: 15px;
+            border-left: 3px solid #a78bfa;
+        }
+
+        h4 {
+            color: #fbbf24;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .problema {
+            background: #16213e;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .problema:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 12px 24px rgba(0, 212, 255, 0.2);
+        }
+
+        .enunciado {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 1.1em;
+            border: 1px solid #4c5fff;
+        }
+
+        .desarrollo {
+            background: #0f1729;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 1px solid #2a2a40;
+        }
+
+        .paso {
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 4px solid #a78bfa;
+        }
+
+        .paso strong {
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .formula {
+            background: #2a2a40;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #4c5fff;
+        }
+
+        .respuesta {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 2px solid #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .nota {
+            background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+            border-left: 5px solid #fbbf24;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0;
+            padding: 25px;
+            background: #16213e;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+        }
+
+        button {
+            background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #a855f7 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.5);
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .correcta {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .incorrecta {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #9ca3af;
+            border-top: 2px solid #2a2a40;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7e22ce;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9333ea;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .controls {
+                display: none;
+            }
+            button {
+                display: none;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problema {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Sección 5: Ejercicios Varios<br>Geometría Vectorial</h1>
+
+        <div class="nota" style="text-align: center;">
+            <strong>👨‍🏫 Resuelto por su Profesor de Geometría Vectorial</strong><br>
+            Todas las soluciones están desarrolladas paso a paso con explicaciones detalladas.<br>
+            Este documento utiliza <strong>MathJax</strong> para renderizar fórmulas matemáticas en LaTeX.
+        </div>
+
+        <div class="controls">
+            <button onclick="window.location.href='solucion_taller_parcial.html'" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">⬅️ Volver al Inicio</button>
+            <button onclick="window.print()">🖨️ Imprimir</button>
+            <button onclick="mostrarTodo()">👁️ Mostrar Todo</button>
+            <button onclick="ocultarTodo()">🔒 Ocultar Todo</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir al Inicio</button>
+        </div>
+
+        <!-- SECCIÓN 5: EJERCICIOS VARIOS -->
+        <h2>🎯 Sección 5: Ejercicios Varios</h2>
+
+        <!-- Ejercicio Varios 1 -->
+        <div class="problema">
+            <h3>Ejercicio 1</h3>
+            <div class="enunciado">
+                Se tiene el vector $\vec{U} = (6, 3, x)$, calcule el valor de $x$ para que la magnitud del vector sea igual a 9.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Paso 1: Aplicar la fórmula de magnitud</strong>
+                    <div class="formula">
+                        $$\|\vec{U}\| = \sqrt{6^2 + 3^2 + x^2} = 9$$
+                        $$\sqrt{36 + 9 + x^2} = 9$$
+                        $$\sqrt{45 + x^2} = 9$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Paso 2: Elevar al cuadrado</strong>
+                    <div class="formula">
+                        $$45 + x^2 = 81$$
+                        $$x^2 = 36$$
+                        $$x = \pm 6$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong> $x = 6$ o $x = -6$
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicio Varios 2 -->
+        <div class="problema">
+            <h3>Ejercicio 2</h3>
+            <div class="enunciado">
+                Se tiene el vector $\vec{U} = (x, 9, 8)$, calcule el valor de $x$ para que la magnitud del vector sea igual a 17.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Aplicar la fórmula</strong>
+                    <div class="formula">
+                        $$\sqrt{x^2 + 9^2 + 8^2} = 17$$
+                        $$\sqrt{x^2 + 81 + 64} = 17$$
+                        $$\sqrt{x^2 + 145} = 17$$
+                        $$x^2 + 145 = 289$$
+                        $$x^2 = 144$$
+                        $$x = \pm 12$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuesta:</strong> $x = 12$ o $x = -12$
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicio Varios 3 -->
+        <div class="problema">
+            <h3>Ejercicio 3</h3>
+            <div class="enunciado">
+                Los vectores $\vec{U} = (-5, 7, 4)$ y $\vec{V} = (-3, 2, 6)$ forman un paralelogramo, calcular el área de dicha figura.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Calcular el producto cruz</strong>
+                    <div class="formula">
+                        $$\vec{U} \times \vec{V} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ -5 & 7 & 4 \\ -3 & 2 & 6 \end{vmatrix}$$
+                        $$\vec{i}: (7)(6) - (4)(2) = 42 - 8 = 34$$
+                        $$\vec{j}: -[(-5)(6) - (4)(-3)] = -[-30 + 12] = 18$$
+                        $$\vec{k}: (-5)(2) - (7)(-3) = -10 + 21 = 11$$
+                        $$\vec{U} \times \vec{V} = (34, 18, 11)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Calcular la magnitud</strong>
+                    <div class="formula">
+                        $$\text{Área} = \|\vec{U} \times \vec{V}\| = \sqrt{34^2 + 18^2 + 11^2}$$
+                        $$= \sqrt{1156 + 324 + 121} = \sqrt{1601}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Área del paralelogramo:</strong> $\sqrt{1601}$ unidades² $\approx 40.01$ unidades²
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicio Varios 4 -->
+        <div class="problema">
+            <h3>Ejercicio 4</h3>
+            <div class="enunciado">
+                Calcular el volumen de un paralelepípedo determinado por los vectores: $\vec{U} = (5, -1, 8)$, $\vec{V} = (6, 7, -9)$ y $\vec{W} = (5, -3, 2)$ en $\mathbb{R}^{3}$.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Calcular $\vec{V} \times \vec{W}$</strong>
+                    <div class="formula">
+                        $$\vec{V} \times \vec{W} = \begin{vmatrix} \vec{i} & \vec{j} & \vec{k} \\ 6 & 7 & -9 \\ 5 & -3 & 2 \end{vmatrix}$$
+                        $$= \vec{i}(14 - 27) - \vec{j}(12 + 45) + \vec{k}(-18 - 35)$$
+                        $$= (-13, -57, -53)$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Calcular el producto mixto</strong>
+                    <div class="formula">
+                        $$\text{Volumen} = |\vec{U} \cdot (\vec{V} \times \vec{W})|$$
+                        $$= |(5)(-13) + (-1)(-57) + (8)(-53)|$$
+                        $$= |-65 + 57 - 424|$$
+                        $$= |-432| = 432$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Volumen:</strong> $432$ unidades³
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicio Varios 5 -->
+        <div class="problema">
+            <h3>Ejercicio 5</h3>
+            <div class="enunciado">
+                Calcule la distancia entre los puntos $P(3, 1, -4)$ y $Q(0, 1, 2)$.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>Aplicar la fórmula de distancia</strong>
+                    <div class="formula">
+                        $$d = \sqrt{(x_2-x_1)^2 + (y_2-y_1)^2 + (z_2-z_1)^2}$$
+                        $$d = \sqrt{(0-3)^2 + (1-1)^2 + (2-(-4))^2}$$
+                        $$d = \sqrt{9 + 0 + 36} = \sqrt{45} = 3\sqrt{5}$$
+                    </div>
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Distancia:</strong> $3\sqrt{5} \approx 6.71$ unidades
+                </div>
+            </div>
+        </div>
+
+        <!-- Ejercicio Varios 21 -->
+        <div class="problema">
+            <h3>Ejercicio 21 - Verdadero o Falso</h3>
+            <div class="enunciado">
+                Responda falso o verdadero a las siguientes preguntas, justifique su respuesta.
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo:</h4>
+                
+                <div class="paso">
+                    <strong>a) Dos rectas diferentes se pueden cortar exactamente en dos puntos.</strong>
+                    <div class="formula">
+                        <span class="incorrecta">FALSO</span>
+                    </div>
+                    <strong>Justificación:</strong> En geometría euclidiana, dos rectas diferentes solo pueden:<br>
+                    • No intersectarse (paralelas o alabeadas)<br>
+                    • Intersectarse en exactamente UN punto<br>
+                    • Ser coincidentes (infinitos puntos)<br>
+                    Nunca pueden cortarse en exactamente dos puntos.
+                </div>
+
+                <div class="paso">
+                    <strong>b) Si el producto vectorial entre dos vectores es igual al vector nulo, uno de los dos vectores tiene que ser el vector nulo.</strong>
+                    <div class="formula">
+                        <span class="incorrecta">FALSO</span>
+                    </div>
+                    <strong>Justificación:</strong> Si $\vec{u} \times \vec{v} = \vec{0}$, significa que los vectores son <strong>paralelos</strong> (o uno es el vector nulo). Por ejemplo: $\vec{u} = (2, 4, 6)$ y $\vec{v} = (1, 2, 3)$ son paralelos pero ninguno es nulo, y su producto cruz es cero.
+                </div>
+
+                <div class="paso">
+                    <strong>c) El producto escalar de un vector por el mismo, es su magnitud elevada al cuadrado.</strong>
+                    <div class="formula">
+                        <span class="correcta">VERDADERO</span>
+                    </div>
+                    <strong>Justificación:</strong> $\vec{u} \cdot \vec{u} = \|\vec{u}\|^2$ por definición del producto escalar.
+                </div>
+
+                <div class="paso">
+                    <strong>d) Una recta en el espacio se determina mínimo con 3 puntos.</strong>
+                    <div class="formula">
+                        <span class="incorrecta">FALSO</span>
+                    </div>
+                    <strong>Justificación:</strong> Una recta se determina con <strong>DOS puntos</strong> distintos o con un punto y un vector director.
+                </div>
+
+                <div class="paso">
+                    <strong>e) El producto escalar entre dos vectores siempre da como resultado un número entero.</strong>
+                    <div class="formula">
+                        <span class="incorrecta">FALSO</span>
+                    </div>
+                    <strong>Justificación:</strong> El producto escalar puede ser cualquier número real. Por ejemplo: $\vec{u} = (1.5, 2.3)$ y $\vec{v} = (1, 1)$ da $\vec{u} \cdot \vec{v} = 3.8$.
+                </div>
+
+                <div class="paso">
+                    <strong>f) Dos planos diferentes se pueden cortar en infinitos puntos.</strong>
+                    <div class="formula">
+                        <span class="correcta">VERDADERO</span>
+                    </div>
+                    <strong>Justificación:</strong> Cuando dos planos se intersectan (no son paralelos ni coincidentes), su intersección es una <strong>recta</strong>, que contiene infinitos puntos.
+                </div>
+
+                <div class="respuesta">
+                    ✅ <strong>Respuestas:</strong><br>
+                    a) FALSO &nbsp; b) FALSO &nbsp; c) VERDADERO<br>
+                    d) FALSO &nbsp; e) FALSO &nbsp; f) VERDADERO
+                </div>
+            </div>
+        </div>
+
+        <div class="nota" style="text-align: center; margin-top: 50px;">
+            <h3>📚 Nota Final del Profesor</h3>
+            <p>Este documento contiene ejercicios variados que cubren diferentes temas de Geometría Vectorial:</p>
+            <ul style="text-align: left; display: inline-block;">
+                <li>Magnitud de vectores</li>
+                <li>Área de paralelogramos (producto cruz)</li>
+                <li>Volumen de paralelepípedos (producto mixto)</li>
+                <li>Distancia entre puntos</li>
+                <li>Conceptos teóricos fundamentales</li>
+            </ul>
+            <p><strong>¡Éxitos en tu aprendizaje de Geometría Vectorial!</strong> 🎓</p>
+        </div>
+
+        <div class="controls">
+            <button onclick="window.location.href='solucion_taller_parcial.html'" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">⬅️ Volver al Inicio</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir Arriba</button>
+            <button onclick="window.print()">🖨️ Imprimir Documento</button>
+        </div>
+
+        <footer>
+            <p>📐 <strong>Sección 5: Ejercicios Varios - Geometría Vectorial</strong></p>
+            <p>Soluciones desarrolladas por su Profesor</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Documento generado el: <span id="fecha"></span></p>
+            <p style="font-size: 0.85em; margin-top: 5px;">Todas las fórmulas matemáticas renderizadas con MathJax</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Funciones para mostrar/ocultar desarrollos
+        function mostrarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'block';
+            });
+        }
+
+        function ocultarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'none';
+            });
+        }
+
+        // Agregar interactividad a los problemas (click en título para expandir/contraer)
+        document.querySelectorAll('.problema h3').forEach(titulo => {
+            titulo.style.cursor = 'pointer';
+            titulo.style.userSelect = 'none';
+            titulo.addEventListener('click', function() {
+                const desarrollo = this.parentElement.querySelector('.desarrollo');
+                if (desarrollo) {
+                    desarrollo.style.display = desarrollo.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Animación de entrada
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.problema').forEach(problema => {
+            problema.style.opacity = '0';
+            problema.style.transform = 'translateY(30px)';
+            problema.style.transition = 'all 0.6s ease-out';
+            observer.observe(problema);
+        });
+    </script>
+</body>
+</html>
+
