@@ -481,7 +481,7 @@
                     </div>
                 </div>
 
-                <h4 style="color: #00d4ff; margin-top: 25px;">🔵 Método 2: Usando la razón (r:s)</h4>
+                <h4 style="color: #00d4ff; margin-top: 25px;">🔵 Método 2: Usando la razón (notación r:s)</h4>
                 
                 <div class="paso">
                     <strong>Interpretación de la razón:</strong>
@@ -494,7 +494,7 @@
                 </div>
 
                 <div class="paso">
-                    <strong>Fórmula usando la razón:</strong>
+                    <strong>Fórmula usando la razón r:s:</strong>
                     <div class="formula">
                         $$R = \frac{s \cdot P + r \cdot Q}{r + s} = \frac{3P + 1Q}{1 + 3}$$
                     </div>
@@ -511,8 +511,51 @@
                     </div>
                 </div>
 
+                <h4 style="color: #fbbf24; margin-top: 25px;">🟡 Método 3: Usando la razón k = r/s (constante)</h4>
+                
+                <div class="paso">
+                    <strong>Definir la constante k:</strong>
+                    <div class="nota" style="background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%); border-left: 5px solid #fbbf24;">
+                        Si la razón es r:s = 1:3, entonces:<br>
+                        $$k = \frac{r}{s} = \frac{1}{3}$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>📌 Fórmula para DIVISIÓN INTERNA (punto entre P y Q):</strong>
+                    <div class="formula">
+                        $$R = \frac{P + kQ}{1 + k}$$
+                    </div>
+                    <strong>Aplicando coordenada por coordenada:</strong>
+                    <div class="formula">
+                        $$x = \frac{x_1 + kx_2}{1 + k}, \quad y = \frac{y_1 + ky_2}{1 + k}, \quad z = \frac{z_1 + kz_2}{1 + k}$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>Sustituir k = 1/3:</strong>
+                    <div class="formula">
+                        $$x = \frac{3 + \frac{1}{3}(0)}{1 + \frac{1}{3}} = \frac{3}{\frac{4}{3}} = \frac{9}{4}$$
+                        $$y = \frac{1 + \frac{1}{3}(1)}{1 + \frac{1}{3}} = \frac{1 + \frac{1}{3}}{\frac{4}{3}} = \frac{\frac{4}{3}}{\frac{4}{3}} = 1$$
+                        $$z = \frac{-4 + \frac{1}{3}(2)}{1 + \frac{1}{3}} = \frac{-4 + \frac{2}{3}}{\frac{4}{3}} = \frac{-\frac{10}{3}}{\frac{4}{3}} = -\frac{5}{2}$$
+                    </div>
+                </div>
+
+                <div class="paso">
+                    <strong>⚠️ Fórmula para DIVISIÓN EXTERNA (punto fuera del segmento):</strong>
+                    <div class="nota" style="background: linear-gradient(135deg, #78350f 0%, #92400e 100%);">
+                        Si usas la fórmula con RESTA:<br>
+                        $$R = \frac{P - kQ}{1 - k} \quad \text{(solo para división externa)}$$
+                        <br>
+                        Esta NO es la fórmula para este problema, ya que R está ENTRE P y Q.
+                    </div>
+                </div>
+
                 <div class="nota">
-                    <strong>💡 Nota importante:</strong> Ambos métodos son equivalentes y dan el mismo resultado. El método de la razón es especialmente útil cuando trabajamos con divisiones en proporciones específicas.
+                    <strong>💡 Resumen de fórmulas con razón k:</strong><br>
+                    • <strong>División INTERNA</strong> (punto entre P y Q): $R = \frac{P + kQ}{1 + k}$ ✅<br>
+                    • <strong>División EXTERNA</strong> (punto fuera del segmento): $R = \frac{P - kQ}{1 - k}$ ❌ (no aplica aquí)<br><br>
+                    Los tres métodos dan el mismo resultado para división interna.
                 </div>
 
                 <div class="respuesta">
