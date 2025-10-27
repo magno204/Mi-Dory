@@ -21,6 +21,9 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
     
+    <!-- Plotly.js para gráficos 3D -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -560,6 +563,18 @@
 
                 <div class="respuesta">
                     ✅ <strong>Respuesta:</strong> $R = \left(\frac{9}{4}, 1, -\frac{5}{2}\right)$ o $R = (2.25, 1, -2.5)$
+                </div>
+
+                <h4 style="color: #10b981; margin-top: 25px;">📊 Visualización Gráfica 3D</h4>
+                
+                <div class="paso">
+                    <div id="grafico_ejercicio6" style="width: 100%; height: 600px; background: #0f1729; border-radius: 12px; border: 2px solid #10b981;"></div>
+                    <div class="nota" style="margin-top: 15px; text-align: center;">
+                        <strong>🎮 Interactivo:</strong> Arrastra para rotar, scroll para zoom, doble click para restablecer vista.<br>
+                        <strong style="color: #ef4444;">● P(3, 1, -4)</strong> → 
+                        <strong style="color: #10b981;">● R(2.25, 1, -2.5)</strong> → 
+                        <strong style="color: #3b82f6;">● Q(0, 1, 2)</strong>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1445,6 +1460,270 @@
             problema.style.transform = 'translateY(30px)';
             problema.style.transition = 'all 0.6s ease-out';
             observer.observe(problema);
+        });
+
+        // Gráfico 3D para el Ejercicio 6
+        function crearGraficoEjercicio6() {
+            // Coordenadas de los puntos
+            const P = [3, 1, -4];
+            const Q = [0, 1, 2];
+            const R = [2.25, 1, -2.5];
+
+            // Punto P (rojo)
+            const traceP = {
+                x: [P[0]],
+                y: [P[1]],
+                z: [P[2]],
+                mode: 'markers+text',
+                type: 'scatter3d',
+                name: 'P(3, 1, -4)',
+                marker: {
+                    size: 12,
+                    color: '#ef4444',
+                    symbol: 'circle',
+                    line: {
+                        color: '#ffffff',
+                        width: 2
+                    }
+                },
+                text: ['P'],
+                textposition: 'top center',
+                textfont: {
+                    size: 16,
+                    color: '#ef4444',
+                    family: 'Arial, sans-serif',
+                    weight: 'bold'
+                }
+            };
+
+            // Punto Q (azul)
+            const traceQ = {
+                x: [Q[0]],
+                y: [Q[1]],
+                z: [Q[2]],
+                mode: 'markers+text',
+                type: 'scatter3d',
+                name: 'Q(0, 1, 2)',
+                marker: {
+                    size: 12,
+                    color: '#3b82f6',
+                    symbol: 'circle',
+                    line: {
+                        color: '#ffffff',
+                        width: 2
+                    }
+                },
+                text: ['Q'],
+                textposition: 'top center',
+                textfont: {
+                    size: 16,
+                    color: '#3b82f6',
+                    family: 'Arial, sans-serif',
+                    weight: 'bold'
+                }
+            };
+
+            // Punto R (verde) - punto a 1/4 de distancia
+            const traceR = {
+                x: [R[0]],
+                y: [R[1]],
+                z: [R[2]],
+                mode: 'markers+text',
+                type: 'scatter3d',
+                name: 'R(2.25, 1, -2.5)',
+                marker: {
+                    size: 14,
+                    color: '#10b981',
+                    symbol: 'diamond',
+                    line: {
+                        color: '#ffffff',
+                        width: 2
+                    }
+                },
+                text: ['R (1/4 distancia)'],
+                textposition: 'top center',
+                textfont: {
+                    size: 16,
+                    color: '#10b981',
+                    family: 'Arial, sans-serif',
+                    weight: 'bold'
+                }
+            };
+
+            // Línea del segmento PQ
+            const traceLine = {
+                x: [P[0], Q[0]],
+                y: [P[1], Q[1]],
+                z: [P[2], Q[2]],
+                mode: 'lines',
+                type: 'scatter3d',
+                name: 'Segmento PQ',
+                line: {
+                    color: '#9ca3af',
+                    width: 4
+                },
+                showlegend: true
+            };
+
+            // Línea PR (1/4 del segmento)
+            const tracePR = {
+                x: [P[0], R[0]],
+                y: [P[1], R[1]],
+                z: [P[2], R[2]],
+                mode: 'lines',
+                type: 'scatter3d',
+                name: 'PR (1/4 de PQ)',
+                line: {
+                    color: '#fbbf24',
+                    width: 6,
+                    dash: 'solid'
+                },
+                showlegend: true
+            };
+
+            // Línea RQ (3/4 del segmento)
+            const traceRQ = {
+                x: [R[0], Q[0]],
+                y: [R[1], Q[1]],
+                z: [R[2], Q[2]],
+                mode: 'lines',
+                type: 'scatter3d',
+                name: 'RQ (3/4 de PQ)',
+                line: {
+                    color: '#a78bfa',
+                    width: 4,
+                    dash: 'dash'
+                },
+                showlegend: true
+            };
+
+            // Ejes de referencia
+            const maxRange = 5;
+            const traceAxisX = {
+                x: [-maxRange, maxRange],
+                y: [0, 0],
+                z: [0, 0],
+                mode: 'lines',
+                type: 'scatter3d',
+                name: 'Eje X',
+                line: { color: '#ef4444', width: 2, dash: 'dot' },
+                showlegend: false
+            };
+
+            const traceAxisY = {
+                x: [0, 0],
+                y: [-maxRange, maxRange],
+                z: [0, 0],
+                mode: 'lines',
+                type: 'scatter3d',
+                name: 'Eje Y',
+                line: { color: '#10b981', width: 2, dash: 'dot' },
+                showlegend: false
+            };
+
+            const traceAxisZ = {
+                x: [0, 0],
+                y: [0, 0],
+                z: [-maxRange, maxRange],
+                mode: 'lines',
+                type: 'scatter3d',
+                name: 'Eje Z',
+                line: { color: '#3b82f6', width: 2, dash: 'dot' },
+                showlegend: false
+            };
+
+            const data = [traceAxisX, traceAxisY, traceAxisZ, traceLine, tracePR, traceRQ, traceP, traceQ, traceR];
+
+            const layout = {
+                title: {
+                    text: 'División de Segmento PQ en Razón 1:3',
+                    font: {
+                        size: 20,
+                        color: '#00d4ff',
+                        family: 'Arial, sans-serif',
+                        weight: 'bold'
+                    }
+                },
+                scene: {
+                    xaxis: {
+                        title: 'Eje X',
+                        titlefont: { color: '#ef4444', size: 14 },
+                        gridcolor: '#2a2a40',
+                        zerolinecolor: '#ef4444',
+                        showbackground: true,
+                        backgroundcolor: '#0f1729'
+                    },
+                    yaxis: {
+                        title: 'Eje Y',
+                        titlefont: { color: '#10b981', size: 14 },
+                        gridcolor: '#2a2a40',
+                        zerolinecolor: '#10b981',
+                        showbackground: true,
+                        backgroundcolor: '#0f1729'
+                    },
+                    zaxis: {
+                        title: 'Eje Z',
+                        titlefont: { color: '#3b82f6', size: 14 },
+                        gridcolor: '#2a2a40',
+                        zerolinecolor: '#3b82f6',
+                        showbackground: true,
+                        backgroundcolor: '#0f1729'
+                    },
+                    camera: {
+                        eye: { x: 1.5, y: 1.5, z: 1.2 },
+                        center: { x: 0, y: 0, z: 0 }
+                    },
+                    aspectmode: 'cube'
+                },
+                paper_bgcolor: '#0f1729',
+                plot_bgcolor: '#0f1729',
+                font: {
+                    color: '#e0e0e0',
+                    family: 'Arial, sans-serif'
+                },
+                legend: {
+                    x: 0.02,
+                    y: 0.98,
+                    bgcolor: 'rgba(26, 26, 46, 0.8)',
+                    bordercolor: '#00d4ff',
+                    borderwidth: 1,
+                    font: {
+                        size: 12,
+                        color: '#e0e0e0'
+                    }
+                },
+                margin: {
+                    l: 0,
+                    r: 0,
+                    b: 0,
+                    t: 60
+                }
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                displaylogo: false,
+                modeBarButtonsToRemove: ['pan3d', 'select3d', 'lasso3d', 'toImage'],
+                modeBarButtonsToAdd: [{
+                    name: 'Restablecer Vista',
+                    icon: Plotly.Icons.home,
+                    click: function(gd) {
+                        Plotly.relayout(gd, {
+                            'scene.camera.eye': { x: 1.5, y: 1.5, z: 1.2 }
+                        });
+                    }
+                }]
+            };
+
+            Plotly.newPlot('grafico_ejercicio6', data, layout, config);
+        }
+
+        // Crear el gráfico cuando la página cargue completamente
+        window.addEventListener('load', function() {
+            if (document.getElementById('grafico_ejercicio6')) {
+                crearGraficoEjercicio6();
+            }
         });
     </script>
 </body>
