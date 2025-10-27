@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volumen del Paralelepípedo - Geometría Vectorial</title>
+    
+    <!-- MathJax para renderizar LaTeX -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .subtitle {
+            color: #a78bfa;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: #a78bfa;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-left: 5px solid #7e22ce;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #60a5fa;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .concepto-box {
+            background: linear-gradient(135deg, #16213e 0%, #1a2540 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #00d4ff;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #10b981;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .formula-box h4 {
+            color: #10b981;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .paso {
+            background: #16213e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #fbbf24;
+        }
+
+        .paso-numero {
+            display: inline-block;
+            background: #7e22ce;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .nota {
+            background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+            border-left: 5px solid #fbbf24;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+
+        .nota h4 {
+            color: #fbbf24;
+            margin-bottom: 10px;
+        }
+
+        .resultado-final {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            border: 3px solid #00d4ff;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        .resultado-final h3 {
+            color: #00d4ff;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        .resultado-final .valor {
+            color: #10b981;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        canvas {
+            display: block;
+            margin: 30px auto;
+            background: #0f0f1e;
+            border-radius: 10px;
+            border: 2px solid #2a2a40;
+            max-width: 100%;
+        }
+
+        .grafico-container {
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px solid #4c5fff;
+        }
+
+        .grafico-container h3 {
+            text-align: center;
+            color: #00d4ff;
+            margin-bottom: 20px;
+        }
+
+        .btn-volver {
+            display: inline-block;
+            background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+            margin-top: 20px;
+        }
+
+        .btn-volver:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #a855f7 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.5);
+        }
+
+        .lista-propiedades {
+            background: #16213e;
+            padding: 20px 20px 20px 40px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .lista-propiedades li {
+            margin: 12px 0;
+            color: #e0e0e0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #9ca3af;
+            border-top: 2px solid #2a2a40;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7e22ce;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9333ea;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container > * {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            canvas {
+                width: 100% !important;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 Volumen del Paralelepípedo</h1>
+        <div class="subtitle">Geometría Vectorial - Ejercicio 4: Ejercicios Varios</div>
+
+        <!-- Concepto de Paralelepípedo -->
+        <h2>🎯 ¿Qué es un Paralelepípedo?</h2>
+        
+        <div class="concepto-box">
+            <p style="font-size: 1.1em; margin-bottom: 15px;">
+                Un <strong>paralelepípedo</strong> es un sólido tridimensional formado por seis caras que son paralelogramos. 
+                Es la generalización en 3D de un paralelogramo en 2D.
+            </p>
+            <p style="font-size: 1.1em; margin-bottom: 15px;">
+                Cuando tenemos tres vectores $\vec{U}$, $\vec{V}$ y $\vec{W}$ en el espacio $\mathbb{R}^{3}$, 
+                estos vectores definen un paralelepípedo donde cada vector representa una arista que parte 
+                desde el origen (o desde un punto común).
+            </p>
+            <h4 style="color: #60a5fa; margin-top: 20px; margin-bottom: 10px;">Características importantes:</h4>
+            <ul class="lista-propiedades">
+                <li>✓ Tiene 6 caras paralelas de dos en dos</li>
+                <li>✓ Tiene 12 aristas (4 grupos de 3 aristas paralelas)</li>
+                <li>✓ Tiene 8 vértices</li>
+                <li>✓ Las caras opuestas son congruentes (iguales)</li>
+                <li>✓ El volumen se calcula mediante el <strong>producto mixto</strong> de tres vectores</li>
+            </ul>
+        </div>
+
+        <!-- Gráfico 3D -->
+        <div class="grafico-container">
+            <h3>🎨 Visualización del Paralelepípedo</h3>
+            <canvas id="paralelepipedo-canvas" width="700" height="500"></canvas>
+            <div style="text-align: center; color: #9ca3af; margin-top: 15px;">
+                <p>El paralelepípedo está determinado por los tres vectores que parten del origen</p>
+            </div>
+        </div>
+
+        <!-- Fórmula del Volumen -->
+        <h2>📐 Fórmula del Volumen</h2>
+
+        <div class="formula-box">
+            <h4>Volumen del Paralelepípedo</h4>
+            <p style="font-size: 1.3em; margin: 20px 0;">
+                $$V = \left| \vec{U} \cdot (\vec{V} \times \vec{W}) \right|$$
+            </p>
+            <p style="color: #d1d5db; margin-top: 15px;">
+                Donde $\vec{V} \times \vec{W}$ es el <strong>producto cruz</strong> (producto vectorial)<br>
+                y el punto $\cdot$ representa el <strong>producto escalar</strong> (dot product)
+            </p>
+        </div>
+
+        <div class="nota">
+            <h4>💡 Concepto Clave: Producto Mixto</h4>
+            <p>
+                El <strong>producto mixto</strong> (también llamado triple producto escalar) $\vec{U} \cdot (\vec{V} \times \vec{W})$ 
+                tiene una interpretación geométrica muy importante: representa el volumen (con signo) del paralelepípedo 
+                determinado por los tres vectores.
+            </p>
+            <p style="margin-top: 10px;">
+                Tomamos el <strong>valor absoluto</strong> porque el volumen siempre es positivo, pero el producto mixto 
+                puede ser negativo dependiendo de la orientación de los vectores.
+            </p>
+            <p style="margin-top: 10px;">
+                El producto mixto también se puede calcular como el <strong>determinante</strong> de la matriz 
+                formada por los tres vectores:
+            </p>
+            <p style="text-align: center; margin-top: 15px; font-size: 1.1em;">
+                $$\vec{U} \cdot (\vec{V} \times \vec{W}) = \begin{vmatrix}
+                U_x & U_y & U_z \\
+                V_x & V_y & V_z \\
+                W_x & W_y & W_z
+                \end{vmatrix}$$
+            </p>
+        </div>
+
+        <!-- Ejercicio Resuelto -->
+        <h2>✍️ Ejercicio Resuelto</h2>
+
+        <div class="concepto-box">
+            <h3 style="color: #fbbf24; margin-top: 0;">📝 Enunciado</h3>
+            <p style="font-size: 1.15em; margin-top: 15px;">
+                Calcular el volumen de un paralelepípedo determinado por los vectores:
+            </p>
+            <p style="text-align: center; font-size: 1.2em; margin: 20px 0;">
+                $$\vec{U} = (5, -1, 8)$$
+                $$\vec{V} = (6, 7, -9)$$
+                $$\vec{W} = (5, -3, 2)$$
+            </p>
+            <p style="font-size: 1.1em;">
+                en $\mathbb{R}^{3}$
+            </p>
+        </div>
+
+        <h3>📋 Solución Paso a Paso</h3>
+
+        <!-- Paso 1 -->
+        <div class="paso">
+            <div class="paso-numero">Paso 1</div>
+            <h4 style="color: #60a5fa; margin-bottom: 10px;">Calcular el producto cruz $\vec{V} \times \vec{W}$</h4>
+            <p style="margin-bottom: 15px;">
+                El producto cruz de dos vectores se calcula mediante el determinante:
+            </p>
+            <p style="text-align: center; font-size: 1.1em; margin: 20px 0;">
+                $$\vec{V} \times \vec{W} = \begin{vmatrix}
+                \vec{i} & \vec{j} & \vec{k} \\
+                6 & 7 & -9 \\
+                5 & -3 & 2
+                \end{vmatrix}$$
+            </p>
+            <p style="margin: 15px 0;">Expandiendo el determinante:</p>
+            <p style="text-align: center; font-size: 1.05em; margin: 15px 0;">
+                $$\vec{V} \times \vec{W} = \vec{i}\begin{vmatrix} 7 & -9 \\ -3 & 2 \end{vmatrix} 
+                - \vec{j}\begin{vmatrix} 6 & -9 \\ 5 & 2 \end{vmatrix} 
+                + \vec{k}\begin{vmatrix} 6 & 7 \\ 5 & -3 \end{vmatrix}$$
+            </p>
+            <p style="margin: 15px 0;">Calculando cada determinante 2×2:</p>
+            <p style="text-align: center; font-size: 1.05em; margin: 10px 0;">
+                $$\vec{i}: (7)(2) - (-9)(-3) = 14 - 27 = -13$$
+                $$\vec{j}: (6)(2) - (-9)(5) = 12 + 45 = 57 \quad \text{(cambio de signo)} \rightarrow -57$$
+                $$\vec{k}: (6)(-3) - (7)(5) = -18 - 35 = -53$$
+            </p>
+            <p style="margin-top: 20px; font-size: 1.1em; color: #10b981;">
+                <strong>Resultado:</strong>
+            </p>
+            <p style="text-align: center; font-size: 1.2em; margin: 15px 0; color: #10b981;">
+                $$\vec{V} \times \vec{W} = (-13, -57, -53)$$
+            </p>
+        </div>
+
+        <!-- Paso 2 -->
+        <div class="paso">
+            <div class="paso-numero">Paso 2</div>
+            <h4 style="color: #60a5fa; margin-bottom: 10px;">Calcular el producto escalar $\vec{U} \cdot (\vec{V} \times \vec{W})$</h4>
+            <p style="margin-bottom: 15px;">
+                Ahora multiplicamos escalarmente $\vec{U}$ con el resultado del producto cruz:
+            </p>
+            <p style="text-align: center; font-size: 1.1em; margin: 20px 0;">
+                $$\vec{U} \cdot (\vec{V} \times \vec{W}) = (5, -1, 8) \cdot (-13, -57, -53)$$
+            </p>
+            <p style="margin: 15px 0;">El producto escalar se calcula como:</p>
+            <p style="text-align: center; font-size: 1.1em; margin: 15px 0;">
+                $$= (5)(-13) + (-1)(-57) + (8)(-53)$$
+            </p>
+            <p style="text-align: center; font-size: 1.1em; margin: 15px 0;">
+                $$= -65 + 57 - 424$$
+            </p>
+            <p style="text-align: center; font-size: 1.1em; margin: 15px 0;">
+                $$= -432$$
+            </p>
+            <p style="margin-top: 20px; font-size: 1.1em; color: #10b981;">
+                <strong>Resultado del producto mixto:</strong>
+            </p>
+            <p style="text-align: center; font-size: 1.2em; margin: 15px 0; color: #10b981;">
+                $$\vec{U} \cdot (\vec{V} \times \vec{W}) = -432$$
+            </p>
+        </div>
+
+        <!-- Paso 3 -->
+        <div class="paso">
+            <div class="paso-numero">Paso 3</div>
+            <h4 style="color: #60a5fa; margin-bottom: 10px;">Calcular el volumen (valor absoluto)</h4>
+            <p style="margin-bottom: 15px;">
+                El volumen es el valor absoluto del producto mixto:
+            </p>
+            <p style="text-align: center; font-size: 1.2em; margin: 20px 0;">
+                $$V = \left| \vec{U} \cdot (\vec{V} \times \vec{W}) \right| = |-432| = 432$$
+            </p>
+        </div>
+
+        <!-- Resultado Final -->
+        <div class="resultado-final">
+            <h3>🎉 Resultado Final</h3>
+            <p style="font-size: 1.2em; color: #e0e0e0; margin: 15px 0;">
+                El volumen del paralelepípedo es:
+            </p>
+            <div class="valor">432 unidades cúbicas</div>
+            <p style="font-size: 1.1em; color: #d1d5db; margin-top: 10px;">
+                $$V = 432 \text{ u}^3$$
+            </p>
+        </div>
+
+        <!-- Método Alternativo -->
+        <h2>🔄 Método Alternativo: Usando Determinante</h2>
+
+        <div class="concepto-box">
+            <p style="font-size: 1.1em; margin-bottom: 20px;">
+                El producto mixto también se puede calcular directamente como el determinante 
+                de la matriz formada por los tres vectores como filas:
+            </p>
+            <p style="text-align: center; font-size: 1.1em; margin: 20px 0;">
+                $$V = \left| \begin{vmatrix}
+                5 & -1 & 8 \\
+                6 & 7 & -9 \\
+                5 & -3 & 2
+                \end{vmatrix} \right|$$
+            </p>
+            <p style="margin: 15px 0;">Expandiendo por la primera fila:</p>
+            <p style="text-align: center; font-size: 1.05em; margin: 20px 0;">
+                $$= 5\begin{vmatrix} 7 & -9 \\ -3 & 2 \end{vmatrix} 
+                - (-1)\begin{vmatrix} 6 & -9 \\ 5 & 2 \end{vmatrix} 
+                + 8\begin{vmatrix} 6 & 7 \\ 5 & -3 \end{vmatrix}$$
+            </p>
+            <p style="text-align: center; font-size: 1.05em; margin: 15px 0;">
+                $$= 5[(7)(2) - (-9)(-3)] + 1[(6)(2) - (-9)(5)] + 8[(6)(-3) - (7)(5)]$$
+            </p>
+            <p style="text-align: center; font-size: 1.05em; margin: 15px 0;">
+                $$= 5[14 - 27] + 1[12 + 45] + 8[-18 - 35]$$
+            </p>
+            <p style="text-align: center; font-size: 1.05em; margin: 15px 0;">
+                $$= 5(-13) + 1(57) + 8(-53)$$
+            </p>
+            <p style="text-align: center; font-size: 1.05em; margin: 15px 0;">
+                $$= -65 + 57 - 424 = -432$$
+            </p>
+            <p style="text-align: center; font-size: 1.2em; margin: 25px 0; color: #10b981;">
+                $$V = |-432| = 432 \text{ u}^3$$
+            </p>
+            <p style="margin-top: 20px; color: #9ca3af;">
+                ✓ Ambos métodos dan el mismo resultado, confirmando nuestra respuesta.
+            </p>
+        </div>
+
+        <!-- Resumen -->
+        <div class="nota">
+            <h4>📚 Resumen de Conceptos</h4>
+            <ul style="margin-left: 20px; margin-top: 15px;">
+                <li style="margin: 10px 0;">
+                    <strong>Paralelepípedo:</strong> Sólido 3D determinado por tres vectores
+                </li>
+                <li style="margin: 10px 0;">
+                    <strong>Producto Cruz ($\vec{V} \times \vec{W}$):</strong> Da un vector perpendicular a ambos vectores originales
+                </li>
+                <li style="margin: 10px 0;">
+                    <strong>Producto Mixto ($\vec{U} \cdot (\vec{V} \times \vec{W})$):</strong> Da el volumen con signo del paralelepípedo
+                </li>
+                <li style="margin: 10px 0;">
+                    <strong>Volumen:</strong> Es el valor absoluto del producto mixto
+                </li>
+                <li style="margin: 10px 0;">
+                    <strong>Interpretación Geométrica:</strong> El volumen representa el espacio que ocupa el sólido en $\mathbb{R}^3$
+                </li>
+            </ul>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="solucion_taller_parcial.html" class="btn-volver">← Volver al Índice Principal</a>
+        </div>
+
+        <footer>
+            <p style="font-size: 1.2em; margin-bottom: 10px;">
+                📦 <strong>Volumen del Paralelepípedo - Ejercicio 4</strong>
+            </p>
+            <p style="margin-bottom: 15px;">Material educativo de Geometría Vectorial</p>
+            <p style="font-size: 0.9em; color: #60a5fa;">
+                Documento generado el: <span id="fecha"></span>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Dibujar el paralelepípedo en 3D
+        function dibujarParalelepipedo() {
+            const canvas = document.getElementById('paralelepipedo-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Limpiar canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Configuración de proyección isométrica simplificada
+            const scale = 20;
+            const offsetX = 350;
+            const offsetY = 300;
+            
+            // Función para proyectar punto 3D a 2D (vista isométrica)
+            function project(x, y, z) {
+                const angle = Math.PI / 6; // 30 grados
+                return {
+                    x: offsetX + (x - z) * Math.cos(angle) * scale,
+                    y: offsetY + (x + z) * Math.sin(angle) * scale - y * scale
+                };
+            }
+            
+            // Vectores del ejercicio (escalados para visualización)
+            const U = { x: 5, y: -1, z: 8 };
+            const V = { x: 6, y: 7, z: -9 };
+            const W = { x: 5, y: -3, z: 2 };
+            
+            // Origen
+            const O = { x: 0, y: 0, z: 0 };
+            
+            // Calcular los 8 vértices del paralelepípedo
+            const vertices = [
+                O,  // 0: origen
+                U,  // 1: U
+                V,  // 2: V
+                W,  // 3: W
+                { x: U.x + V.x, y: U.y + V.y, z: U.z + V.z },  // 4: U + V
+                { x: U.x + W.x, y: U.y + W.y, z: U.z + W.z },  // 5: U + W
+                { x: V.x + W.x, y: V.y + W.y, z: V.z + W.z },  // 6: V + W
+                { x: U.x + V.x + W.x, y: U.y + V.y + W.y, z: U.z + V.z + W.z }  // 7: U + V + W
+            ];
+            
+            // Proyectar todos los vértices
+            const projected = vertices.map(v => project(v.x, v.y, v.z));
+            
+            // Dibujar aristas del paralelepípedo (con transparencia para profundidad)
+            const edges = [
+                // Desde el origen
+                [0, 1], [0, 2], [0, 3],
+                // Aristas paralelas a U
+                [2, 4], [3, 5], [6, 7],
+                // Aristas paralelas a V
+                [1, 4], [3, 6], [5, 7],
+                // Aristas paralelas a W
+                [1, 5], [2, 6], [4, 7]
+            ];
+            
+            // Dibujar aristas traseras (más tenues)
+            ctx.strokeStyle = 'rgba(100, 150, 200, 0.4)';
+            ctx.lineWidth = 1.5;
+            const backEdges = [[2, 4], [3, 5], [3, 6], [5, 7], [6, 7], [4, 7]];
+            backEdges.forEach(edge => {
+                ctx.beginPath();
+                ctx.moveTo(projected[edge[0]].x, projected[edge[0]].y);
+                ctx.lineTo(projected[edge[1]].x, projected[edge[1]].y);
+                ctx.stroke();
+            });
+            
+            // Dibujar aristas frontales (más visibles)
+            ctx.strokeStyle = 'rgba(100, 200, 255, 0.9)';
+            ctx.lineWidth = 2;
+            const frontEdges = [[0, 1], [0, 2], [0, 3], [1, 4], [1, 5], [2, 6]];
+            frontEdges.forEach(edge => {
+                ctx.beginPath();
+                ctx.moveTo(projected[edge[0]].x, projected[edge[0]].y);
+                ctx.lineTo(projected[edge[1]].x, projected[edge[1]].y);
+                ctx.stroke();
+            });
+            
+            // Dibujar vectores principales con colores diferentes
+            // Vector U (rojo)
+            ctx.strokeStyle = '#ff6b6b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(projected[0].x, projected[0].y);
+            ctx.lineTo(projected[1].x, projected[1].y);
+            ctx.stroke();
+            drawArrow(ctx, projected[0], projected[1], '#ff6b6b');
+            
+            // Vector V (verde)
+            ctx.strokeStyle = '#51cf66';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(projected[0].x, projected[0].y);
+            ctx.lineTo(projected[2].x, projected[2].y);
+            ctx.stroke();
+            drawArrow(ctx, projected[0], projected[2], '#51cf66');
+            
+            // Vector W (amarillo)
+            ctx.strokeStyle = '#ffd43b';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(projected[0].x, projected[0].y);
+            ctx.lineTo(projected[3].x, projected[3].y);
+            ctx.stroke();
+            drawArrow(ctx, projected[0], projected[3], '#ffd43b');
+            
+            // Etiquetas de vectores
+            ctx.font = 'bold 18px Arial';
+            ctx.fillStyle = '#ff6b6b';
+            ctx.fillText('U', projected[1].x + 10, projected[1].y - 5);
+            
+            ctx.fillStyle = '#51cf66';
+            ctx.fillText('V', projected[2].x + 10, projected[2].y - 5);
+            
+            ctx.fillStyle = '#ffd43b';
+            ctx.fillText('W', projected[3].x + 10, projected[3].y + 20);
+            
+            // Etiqueta del origen
+            ctx.fillStyle = '#00d4ff';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('O', projected[0].x - 20, projected[0].y + 20);
+            
+            // Punto en el origen
+            ctx.fillStyle = '#00d4ff';
+            ctx.beginPath();
+            ctx.arc(projected[0].x, projected[0].y, 5, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Título con información de los vectores
+            ctx.font = 'bold 16px Arial';
+            ctx.fillStyle = '#a78bfa';
+            ctx.fillText('Vectores del Ejercicio:', 20, 30);
+            ctx.font = '14px Arial';
+            ctx.fillStyle = '#ff6b6b';
+            ctx.fillText('U = (5, -1, 8)', 20, 55);
+            ctx.fillStyle = '#51cf66';
+            ctx.fillText('V = (6, 7, -9)', 20, 80);
+            ctx.fillStyle = '#ffd43b';
+            ctx.fillText('W = (5, -3, 2)', 20, 105);
+            
+            ctx.fillStyle = '#10b981';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('Volumen = 432 u³', 20, 140);
+        }
+        
+        // Función para dibujar flecha
+        function drawArrow(ctx, from, to, color) {
+            const headlen = 12;
+            const dx = to.x - from.x;
+            const dy = to.y - from.y;
+            const angle = Math.atan2(dy, dx);
+            
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.moveTo(to.x, to.y);
+            ctx.lineTo(to.x - headlen * Math.cos(angle - Math.PI / 6), 
+                       to.y - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(to.x - headlen * Math.cos(angle + Math.PI / 6), 
+                       to.y - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Dibujar al cargar la página
+        window.addEventListener('load', dibujarParalelepipedo);
+        
+        // Redibujar si se cambia el tamaño de la ventana
+        window.addEventListener('resize', function() {
+            const canvas = document.getElementById('paralelepipedo-canvas');
+            if (window.innerWidth < 768) {
+                canvas.width = window.innerWidth - 80;
+                canvas.height = 400;
+            }
+            dibujarParalelepipedo();
+        });
+    </script>
+</body>
+</html>
+
