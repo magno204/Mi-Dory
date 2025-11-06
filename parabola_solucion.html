@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecuación de la Parábola - Geometría Analítica</title>
+    
+    <!-- MathJax para renderizar LaTeX -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    
+    <!-- Plotly.js para gráficos interactivos -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js" charset="utf-8"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            line-height: 1.8;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            color: #00d4ff;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.8em;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            border-bottom: 3px solid #7e22ce;
+            padding-bottom: 20px;
+        }
+
+        h2 {
+            color: #a78bfa;
+            margin-top: 50px;
+            margin-bottom: 25px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #2a2a40 0%, #3a3a50 100%);
+            border-radius: 10px;
+            border-left: 5px solid #00d4ff;
+            font-size: 2em;
+        }
+
+        h3 {
+            color: #60a5fa;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            padding-left: 15px;
+            border-left: 3px solid #a78bfa;
+        }
+
+        h4 {
+            color: #fbbf24;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+        }
+
+        .problema {
+            background: #16213e;
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .problema:hover {
+            border-color: #00d4ff;
+            box-shadow: 0 12px 24px rgba(0, 212, 255, 0.2);
+        }
+
+        .enunciado {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            font-size: 1.1em;
+            border: 1px solid #4c5fff;
+        }
+
+        .desarrollo {
+            background: #0f1729;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 1px solid #2a2a40;
+        }
+
+        .paso {
+            margin: 20px 0;
+            padding: 20px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            border-left: 4px solid #a78bfa;
+        }
+
+        .paso strong {
+            color: #fbbf24;
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .formula {
+            background: #2a2a40;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            overflow-x: auto;
+            border: 1px solid #4c5fff;
+        }
+
+        .respuesta {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border: 2px solid #10b981;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .nota {
+            background: linear-gradient(135deg, #78350f 0%, #92400e 100%);
+            border-left: 5px solid #fbbf24;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .teoria {
+            background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%);
+            border-left: 5px solid #c084fc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 40px 0;
+            padding: 25px;
+            background: #16213e;
+            border-radius: 15px;
+            border: 2px solid #2a2a40;
+        }
+
+        button {
+            background: linear-gradient(135deg, #7e22ce 0%, #9333ea 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 8px;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(126, 34, 206, 0.3);
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #9333ea 0%, #a855f7 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(126, 34, 206, 0.5);
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .correcta {
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        .grafica-ascii {
+            background: #0f1729;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            border: 1px solid #4c5fff;
+            white-space: pre;
+            line-height: 1.4;
+        }
+
+        .grafico-container {
+            background: #0f1729;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid #4c5fff;
+            box-shadow: 0 4px 12px rgba(76, 95, 255, 0.3);
+        }
+
+        .grafico-plotly {
+            width: 100%;
+            height: 600px;
+            border-radius: 8px;
+        }
+
+        .elementos-lista {
+            background: #1a1a2e;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .elementos-lista li {
+            margin: 10px 0;
+        }
+
+        .puntos-tabla {
+            background: #1a1a2e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: #9ca3af;
+            border-top: 2px solid #2a2a40;
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #7e22ce;
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9333ea;
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+            .controls {
+                display: none;
+            }
+            button {
+                display: none;
+            }
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problema {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .box-resultado {
+            background: linear-gradient(135deg, #1e40af 0%, #3730a3 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #60a5fa;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📐 Ecuación de la Parábola<br>Geometría Analítica</h1>
+
+        <div class="nota" style="text-align: center;">
+            <strong>👨‍🏫 Material de Estudio - Geometría Analítica</strong><br>
+            Solución completa desarrollada paso a paso con explicaciones detalladas.<br>
+            Este documento utiliza <strong>MathJax</strong> para renderizar fórmulas matemáticas en LaTeX.
+        </div>
+
+        <div class="controls">
+            <button onclick="window.print()">🖨️ Imprimir</button>
+            <button onclick="mostrarTodo()">👁️ Mostrar Todo</button>
+            <button onclick="ocultarTodo()">🔒 Ocultar Todo</button>
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir al Inicio</button>
+        </div>
+
+        <!-- TEORÍA -->
+        <h2>📚 Teoría: Ecuación de la Parábola</h2>
+
+        <div class="teoria">
+            <h4>Definición</h4>
+            <p>La ecuación de una parábola cuyo <strong>foco</strong> está en $F(0,p)$ y tiene como su <strong>directriz</strong> a la recta $y = -p$ es:</p>
+            
+            <div class="formula">
+                $$x^{2} = 4py$$
+            </div>
+
+            <p style="margin-top: 15px;"><strong>Nota importante:</strong></p>
+            <ul>
+                <li>Si $p > 0$, la parábola abre hacia <strong>arriba</strong></li>
+                <li>Si $p < 0$, la parábola abre hacia <strong>abajo</strong></li>
+            </ul>
+
+            <h4 style="margin-top: 20px;">Elementos de la Parábola</h4>
+            <ul>
+                <li><strong>Vértice (V):</strong> Punto $(0, 0)$ - el punto donde la parábola cambia de dirección</li>
+                <li><strong>Foco (F):</strong> Punto $(0, p)$ - punto focal de la parábola</li>
+                <li><strong>Directriz:</strong> Recta $y = -p$ - recta perpendicular al eje de simetría</li>
+                <li><strong>Eje de simetría:</strong> Recta $x = 0$ (eje Y)</li>
+                <li><strong>Lado recto:</strong> Segmento perpendicular al eje que pasa por el foco, con longitud $|4p|$</li>
+            </ul>
+
+            <div class="grafico-container">
+                <div id="graficoTeoria" class="grafico-plotly" style="height: 500px;"></div>
+            </div>
+            
+            <div class="nota" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-left-color: #60a5fa;">
+                <strong>💡 Gráfico Conceptual:</strong> Este gráfico muestra los elementos generales de una parábola con $p > 0$ (abre hacia arriba). Puedes interactuar con el gráfico para ver mejor cada elemento.
+            </div>
+        </div>
+
+        <!-- PROBLEMA -->
+        <h2>📝 Ejercicio Resuelto</h2>
+
+        <div class="problema">
+            <h3>Problema: Análisis Completo de una Parábola</h3>
+            
+            <div class="enunciado">
+                Dada la ecuación de la parábola: $x^{2} = 10y$
+                <br><br>
+                Determinar:
+                <br>
+                <strong>a)</strong> El foco de la parábola
+                <br>
+                <strong>b)</strong> La ecuación de la directriz
+                <br>
+                <strong>c)</strong> Los extremos del lado recto
+                <br>
+                <strong>d)</strong> Realizar la gráfica
+            </div>
+
+            <div class="desarrollo">
+                <h4>📝 Desarrollo Completo:</h4>
+                
+                <!-- PASO 1 -->
+                <div class="paso">
+                    <strong>Paso 1: Identificar el valor de p</strong>
+                    
+                    <p>La ecuación general de una parábola con vértice en el origen es:</p>
+                    <div class="formula">
+                        $$x^{2} = 4py$$
+                    </div>
+                    
+                    <p>Comparando con nuestra ecuación:</p>
+                    <div class="formula">
+                        $$x^{2} = 10y$$
+                    </div>
+                    
+                    <p>Identificamos que:</p>
+                    <div class="formula">
+                        $$4p = 10$$
+                    </div>
+                    
+                    <p>Despejando $p$:</p>
+                    <div class="formula">
+                        $$p = \frac{10}{4} = \frac{5}{2} = 2.5$$
+                    </div>
+                    
+                    <div class="nota">
+                        <strong>✅ Conclusión:</strong> Como $p = 2.5 > 0$, la parábola <strong>abre hacia arriba</strong>.
+                    </div>
+                </div>
+
+                <!-- PARTE A -->
+                <div class="paso">
+                    <strong>a) Encontrar el Foco</strong>
+                    
+                    <div class="teoria" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-left-color: #60a5fa;">
+                        <strong>📚 Concepto:</strong> Para una parábola de la forma $x^{2} = 4py$ con vértice en $V(0,0)$, el foco se encuentra en:
+                        <div class="formula">
+                            $$F(0, p)$$
+                        </div>
+                        Es decir, el foco está sobre el eje Y, a una distancia $|p|$ del vértice.
+                    </div>
+                    
+                    <p><strong>Aplicando a nuestro problema:</strong></p>
+                    <p>Ya encontramos que $p = 2.5$, por lo tanto el foco está en:</p>
+                    
+                    <div class="formula">
+                        $$F(0, p) = F(0, 2.5)$$
+                    </div>
+                    
+                    <div class="box-resultado">
+                        $$\boxed{F(0, 2.5)}$$
+                    </div>
+                </div>
+
+                <!-- PARTE B -->
+                <div class="paso">
+                    <strong>b) Ecuación de la Directriz</strong>
+                    
+                    <div class="teoria" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-left-color: #60a5fa;">
+                        <strong>📚 Concepto:</strong> La directriz es una recta horizontal que se encuentra a la misma distancia del vértice que el foco, pero en dirección opuesta.
+                        <br><br>
+                        Para una parábola $x^{2} = 4py$, la ecuación de la directriz es:
+                        <div class="formula">
+                            $$y = -p$$
+                        </div>
+                    </div>
+                    
+                    <p><strong>Aplicando a nuestro problema:</strong></p>
+                    <p>Con $p = 2.5$, la directriz es:</p>
+                    
+                    <div class="formula">
+                        $$y = -p = -2.5$$
+                    </div>
+                    
+                    <div class="box-resultado">
+                        $$\boxed{y = -2.5}$$
+                    </div>
+                    
+                    <div class="nota">
+                        <strong>💡 Interpretación geométrica:</strong> La directriz es una línea horizontal ubicada 2.5 unidades por debajo del vértice, mientras que el foco está 2.5 unidades por encima del vértice.
+                    </div>
+                </div>
+
+                <!-- PARTE C -->
+                <div class="paso">
+                    <strong>c) Extremos del Lado Recto</strong>
+                    
+                    <div class="teoria" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-left-color: #60a5fa;">
+                        <strong>📚 Concepto:</strong> El <strong>lado recto</strong> (o latus rectum) es un segmento perpendicular al eje de simetría que pasa por el foco.
+                        <br><br>
+                        <strong>Longitud del lado recto:</strong>
+                        <div class="formula">
+                            $$L = |4p|$$
+                        </div>
+                        <br>
+                        <strong>Extremos del lado recto:</strong> Los extremos están a una distancia de $\frac{L}{2} = |2p|$ unidades a cada lado del foco, en la recta horizontal $y = p$.
+                    </div>
+                    
+                    <p><strong>Calculando la longitud:</strong></p>
+                    <div class="formula">
+                        $$L = |4p| = |4 \times 2.5| = |10| = 10 \text{ unidades}$$
+                    </div>
+                    
+                    <p><strong>Ubicación de los extremos:</strong></p>
+                    <p>Los extremos del lado recto están sobre la recta horizontal $y = p = 2.5$ (donde está el foco).</p>
+                    <p>Como el foco está en $F(0, 2.5)$ y el lado recto tiene longitud 10, los extremos están a 5 unidades a cada lado del foco:</p>
+                    
+                    <ul>
+                        <li><strong>Extremo izquierdo:</strong> $L_1(-5, 2.5)$</li>
+                        <li><strong>Extremo derecho:</strong> $L_2(5, 2.5)$</li>
+                    </ul>
+                    
+                    <div class="box-resultado">
+                        $$\boxed{L_1(-5, 2.5) \quad \text{y} \quad L_2(5, 2.5)}$$
+                    </div>
+                    
+                    <p><strong>Verificación:</strong></p>
+                    <p>La distancia entre $L_1$ y $L_2$ debe ser igual a la longitud del lado recto (10 unidades):</p>
+                    <div class="formula">
+                        $$d = \sqrt{(5-(-5))^2 + (2.5-2.5)^2} = \sqrt{10^2 + 0^2} = \sqrt{100} = 10 \, \checkmark$$
+                    </div>
+                    
+                    <div class="nota">
+                        <strong>✅ Verificación exitosa:</strong> Los extremos del lado recto están correctamente calculados.
+                    </div>
+                </div>
+
+                <!-- PARTE D -->
+                <div class="paso">
+                    <strong>d) Gráfica de la Parábola</strong>
+                    
+                    <h4>Elementos importantes para graficar:</h4>
+                    
+                    <div class="elementos-lista">
+                        <ol>
+                            <li><strong>Vértice:</strong> $V(0, 0)$ → Origen de coordenadas</li>
+                            <li><strong>Foco:</strong> $F(0, 2.5)$ → 2.5 unidades arriba del vértice</li>
+                            <li><strong>Directriz:</strong> $y = -2.5$ → Recta horizontal 2.5 unidades abajo del vértice</li>
+                            <li><strong>Lado recto:</strong> De $L_1(-5, 2.5)$ a $L_2(5, 2.5)$ → Longitud 10 unidades</li>
+                            <li><strong>Eje de simetría:</strong> $x = 0$ → Eje Y</li>
+                            <li><strong>Dirección:</strong> Abre hacia arriba (porque $p > 0$)</li>
+                        </ol>
+                    </div>
+                    
+                    <h4>Puntos adicionales para graficar:</h4>
+                    
+                    <p>Calculamos algunos puntos sustituyendo valores de $x$ en la ecuación $x^{2} = 10y$, es decir, $y = \frac{x^2}{10}$:</p>
+                    
+                    <div class="puntos-tabla">
+                        <ul>
+                            <li>Si $x = 0$: $y = \frac{0^2}{10} = 0$ → Punto $(0, 0)$ <strong>(vértice)</strong></li>
+                            <li>Si $x = 5$: $y = \frac{5^2}{10} = \frac{25}{10} = 2.5$ → Punto $(5, 2.5)$</li>
+                            <li>Si $x = -5$: $y = \frac{(-5)^2}{10} = 2.5$ → Punto $(-5, 2.5)$</li>
+                            <li>Si $x = 10$: $y = \frac{10^2}{10} = \frac{100}{10} = 10$ → Punto $(10, 10)$</li>
+                            <li>Si $x = -10$: $y = \frac{(-10)^2}{10} = 10$ → Punto $(-10, 10)$</li>
+                        </ul>
+                    </div>
+                    
+                    <h4>Representación gráfica interactiva:</h4>
+                    
+                    <div class="grafico-container">
+                        <div id="graficoParabola" class="grafico-plotly"></div>
+                    </div>
+                    
+                    <div class="nota" style="background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-left-color: #60a5fa;">
+                        <strong>💡 Gráfico Interactivo:</strong> Puedes hacer zoom, mover el gráfico y ver los valores exactos al pasar el mouse sobre los puntos. Usa los controles en la esquina superior derecha del gráfico.
+                    </div>
+                    
+                    <h4>Descripción de la gráfica:</h4>
+                    
+                    <div class="nota" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%); border-left-color: #10b981;">
+                        <strong>📊 Análisis de la gráfica:</strong>
+                        <ul>
+                            <li>La parábola tiene su <strong>vértice en el origen</strong> $(0,0)$</li>
+                            <li>Abre <strong>hacia arriba</strong> porque $p = 2.5 > 0$</li>
+                            <li>El <strong>foco</strong> está a $2.5$ unidades arriba del vértice</li>
+                            <li>La <strong>directriz</strong> está a $2.5$ unidades debajo del vértice</li>
+                            <li>El ancho del <strong>lado recto</strong> es de $10$ unidades</li>
+                            <li>La parábola es <strong>simétrica respecto al eje Y</strong></li>
+                            <li>Todos los puntos de la parábola están <strong>equidistantes</strong> del foco y de la directriz</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RESPUESTA FINAL -->
+                <div class="respuesta">
+                    ✅ <strong>RESPUESTAS FINALES:</strong><br><br>
+                    <strong>a)</strong> Foco: $F(0, 2.5)$<br>
+                    <strong>b)</strong> Directriz: $y = -2.5$<br>
+                    <strong>c)</strong> Extremos del lado recto: $L_1(-5, 2.5)$ y $L_2(5, 2.5)$<br>
+                    <strong>d)</strong> Gráfica: Parábola con vértice en $(0,0)$ que abre hacia arriba
+                </div>
+            </div>
+        </div>
+
+        <!-- RESUMEN -->
+        <div class="nota" style="background: linear-gradient(135deg, #4c1d95 0%, #5b21b6 100%); border-left-color: #c084fc;">
+            <strong>💡 Resumen de Fórmulas Importantes:</strong><br><br>
+            
+            <strong>Para una parábola $x^{2} = 4py$ con vértice en el origen:</strong><br><br>
+            
+            <div class="formula">
+                $$\text{Vértice: } V(0, 0)$$
+                $$\text{Foco: } F(0, p)$$
+                $$\text{Directriz: } y = -p$$
+                $$\text{Longitud del lado recto: } L = |4p|$$
+                $$\text{Extremos del lado recto: } (\pm 2p, p)$$
+            </div>
+            
+            <strong>Criterio de apertura:</strong>
+            <ul>
+                <li>Si $p > 0$ → La parábola abre hacia <strong>arriba</strong></li>
+                <li>Si $p < 0$ → La parábola abre hacia <strong>abajo</strong></li>
+            </ul>
+        </div>
+
+        <div class="controls">
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})">⬆️ Ir Arriba</button>
+            <button onclick="window.print()">🖨️ Imprimir Documento</button>
+        </div>
+
+        <footer>
+            <p>📐 <strong>Ecuación de la Parábola - Geometría Analítica</strong></p>
+            <p>Material de estudio desarrollado paso a paso</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Documento generado el: <span id="fecha"></span></p>
+            <p style="font-size: 0.85em; margin-top: 5px;">Todas las fórmulas matemáticas renderizadas con MathJax</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mostrar fecha actual
+        document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Funciones para mostrar/ocultar desarrollos
+        function mostrarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'block';
+            });
+        }
+
+        function ocultarTodo() {
+            const desarrollos = document.querySelectorAll('.desarrollo');
+            desarrollos.forEach(dev => {
+                dev.style.display = 'none';
+            });
+        }
+
+        // Agregar interactividad a los problemas (click en título para expandir/contraer)
+        document.querySelectorAll('.problema h3').forEach(titulo => {
+            titulo.style.cursor = 'pointer';
+            titulo.style.userSelect = 'none';
+            titulo.addEventListener('click', function() {
+                const desarrollo = this.parentElement.querySelector('.desarrollo');
+                if (desarrollo) {
+                    desarrollo.style.display = desarrollo.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Animación de entrada
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.problema').forEach(problema => {
+            problema.style.opacity = '0';
+            problema.style.transform = 'translateY(30px)';
+            problema.style.transition = 'all 0.6s ease-out';
+            observer.observe(problema);
+        });
+
+        // Animación suave al cargar
+        window.addEventListener('load', () => {
+            document.querySelector('.container').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.container').style.transition = 'opacity 1s ease-in';
+                document.querySelector('.container').style.opacity = '1';
+            }, 100);
+        });
+
+        // Crear gráfico conceptual de la teoría
+        function crearGraficoTeoria() {
+            // Parábola genérica con p = 2 para demostración
+            const p = 2;
+            const xParabola = [];
+            const yParabola = [];
+            for (let x = -8; x <= 8; x += 0.1) {
+                xParabola.push(x);
+                yParabola.push(x * x / (4 * p));
+            }
+
+            // Traza de la parábola
+            const traceParabola = {
+                x: xParabola,
+                y: yParabola,
+                mode: 'lines',
+                name: 'Parábola: x² = 4py',
+                line: {
+                    color: '#00d4ff',
+                    width: 3
+                },
+                hovertemplate: 'x: %{x:.2f}<br>y: %{y:.2f}<extra></extra>'
+            };
+
+            // Vértice
+            const traceVertice = {
+                x: [0],
+                y: [0],
+                mode: 'markers+text',
+                name: 'Vértice V(0,0)',
+                marker: {
+                    color: '#10b981',
+                    size: 18,
+                    symbol: 'diamond'
+                },
+                text: ['V(0,0)<br>Vértice'],
+                textposition: 'bottom center',
+                textfont: {
+                    color: '#10b981',
+                    size: 13,
+                    family: 'Arial, sans-serif'
+                },
+                hovertemplate: 'Vértice<br>x: 0<br>y: 0<extra></extra>'
+            };
+
+            // Foco
+            const traceFoco = {
+                x: [0],
+                y: [p],
+                mode: 'markers+text',
+                name: 'Foco F(0,p)',
+                marker: {
+                    color: '#fbbf24',
+                    size: 18,
+                    symbol: 'star'
+                },
+                text: ['F(0,p)<br>Foco'],
+                textposition: 'top center',
+                textfont: {
+                    color: '#fbbf24',
+                    size: 13,
+                    family: 'Arial, sans-serif'
+                },
+                hovertemplate: 'Foco<br>x: 0<br>y: p<extra></extra>'
+            };
+
+            // Directriz
+            const traceDirectriz = {
+                x: [-8, 8],
+                y: [-p, -p],
+                mode: 'lines',
+                name: 'Directriz: y = -p',
+                line: {
+                    color: '#ef4444',
+                    width: 3,
+                    dash: 'dash'
+                },
+                hovertemplate: 'Directriz: y = -p<extra></extra>'
+            };
+
+            // Lado recto
+            const traceLadoRecto = {
+                x: [-2*p, 2*p],
+                y: [p, p],
+                mode: 'lines+markers',
+                name: 'Lado Recto (longitud = 4p)',
+                line: {
+                    color: '#a78bfa',
+                    width: 4
+                },
+                marker: {
+                    color: '#a78bfa',
+                    size: 12
+                },
+                hovertemplate: 'Lado Recto<br>Longitud: 4p<extra></extra>'
+            };
+
+            // Eje de simetría
+            const traceEjeSimetria = {
+                x: [0, 0],
+                y: [-p - 1, 10],
+                mode: 'lines',
+                name: 'Eje de simetría',
+                line: {
+                    color: '#60a5fa',
+                    width: 2,
+                    dash: 'dot'
+                },
+                hovertemplate: 'Eje de simetría<br>x = 0<extra></extra>'
+            };
+
+            // Punto genérico P(x,y) en la parábola
+            const xP = 4;
+            const yP = xP * xP / (4 * p);
+            const tracePuntoP = {
+                x: [xP],
+                y: [yP],
+                mode: 'markers+text',
+                name: 'Punto P(x,y)',
+                marker: {
+                    color: '#ec4899',
+                    size: 15,
+                    symbol: 'circle'
+                },
+                text: ['P(x,y)<br>Punto en<br>la parábola'],
+                textposition: 'top right',
+                textfont: {
+                    color: '#ec4899',
+                    size: 12,
+                    family: 'Arial, sans-serif'
+                },
+                hovertemplate: 'Punto P<br>x: %{x:.2f}<br>y: %{y:.2f}<extra></extra>'
+            };
+
+            const data = [
+                traceParabola,
+                traceVertice,
+                traceFoco,
+                traceDirectriz,
+                traceLadoRecto,
+                traceEjeSimetria,
+                tracePuntoP
+            ];
+
+            const layout = {
+                title: {
+                    text: 'Elementos de la Parábola x² = 4py (caso p > 0)',
+                    font: {
+                        color: '#00d4ff',
+                        size: 22,
+                        family: 'Arial, sans-serif'
+                    }
+                },
+                xaxis: {
+                    title: {
+                        text: 'Eje X',
+                        font: { color: '#e0e0e0', size: 16 }
+                    },
+                    gridcolor: '#2a2a40',
+                    zerolinecolor: '#4c5fff',
+                    zerolinewidth: 2,
+                    tickfont: { color: '#e0e0e0' },
+                    range: [-8, 8]
+                },
+                yaxis: {
+                    title: {
+                        text: 'Eje Y',
+                        font: { color: '#e0e0e0', size: 16 }
+                    },
+                    gridcolor: '#2a2a40',
+                    zerolinecolor: '#4c5fff',
+                    zerolinewidth: 2,
+                    tickfont: { color: '#e0e0e0' },
+                    range: [-4, 10]
+                },
+                plot_bgcolor: '#0f1729',
+                paper_bgcolor: '#0f1729',
+                hovermode: 'closest',
+                showlegend: true,
+                legend: {
+                    x: 0.02,
+                    y: 0.98,
+                    bgcolor: 'rgba(26, 26, 46, 0.8)',
+                    bordercolor: '#4c5fff',
+                    borderwidth: 1,
+                    font: {
+                        color: '#e0e0e0',
+                        size: 11
+                    }
+                },
+                margin: {
+                    l: 60,
+                    r: 40,
+                    t: 70,
+                    b: 60
+                },
+                annotations: [
+                    {
+                        x: 0,
+                        y: -p,
+                        xref: 'x',
+                        yref: 'y',
+                        text: 'y = -p',
+                        showarrow: true,
+                        arrowhead: 2,
+                        ax: 60,
+                        ay: -30,
+                        font: {
+                            color: '#ef4444',
+                            size: 14
+                        },
+                        arrowcolor: '#ef4444'
+                    }
+                ]
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                displaylogo: false,
+                modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d']
+            };
+
+            Plotly.newPlot('graficoTeoria', data, layout, config);
+        }
+
+        // Crear gráfico interactivo de la parábola con Plotly.js
+        function crearGraficoParabola() {
+            // Generar puntos de la parábola: x² = 10y => y = x²/10
+            const xParabola = [];
+            const yParabola = [];
+            for (let x = -12; x <= 12; x += 0.2) {
+                xParabola.push(x);
+                yParabola.push(x * x / 10);
+            }
+
+            // Traza 1: La parábola
+            const traceParabola = {
+                x: xParabola,
+                y: yParabola,
+                mode: 'lines',
+                name: 'Parábola: x² = 10y',
+                line: {
+                    color: '#00d4ff',
+                    width: 3
+                },
+                hovertemplate: 'x: %{x:.2f}<br>y: %{y:.2f}<extra></extra>'
+            };
+
+            // Traza 2: Vértice
+            const traceVertice = {
+                x: [0],
+                y: [0],
+                mode: 'markers+text',
+                name: 'Vértice V(0,0)',
+                marker: {
+                    color: '#10b981',
+                    size: 15,
+                    symbol: 'diamond'
+                },
+                text: ['V(0,0)'],
+                textposition: 'bottom center',
+                textfont: {
+                    color: '#10b981',
+                    size: 14,
+                    family: 'Arial, sans-serif'
+                },
+                hovertemplate: 'Vértice<br>x: 0<br>y: 0<extra></extra>'
+            };
+
+            // Traza 3: Foco
+            const traceFoco = {
+                x: [0],
+                y: [2.5],
+                mode: 'markers+text',
+                name: 'Foco F(0,2.5)',
+                marker: {
+                    color: '#fbbf24',
+                    size: 15,
+                    symbol: 'star'
+                },
+                text: ['F(0,2.5)'],
+                textposition: 'top center',
+                textfont: {
+                    color: '#fbbf24',
+                    size: 14,
+                    family: 'Arial, sans-serif'
+                },
+                hovertemplate: 'Foco<br>x: 0<br>y: 2.5<extra></extra>'
+            };
+
+            // Traza 4: Directriz
+            const traceDirectriz = {
+                x: [-12, 12],
+                y: [-2.5, -2.5],
+                mode: 'lines',
+                name: 'Directriz: y = -2.5',
+                line: {
+                    color: '#ef4444',
+                    width: 3,
+                    dash: 'dash'
+                },
+                hovertemplate: 'Directriz<br>y = -2.5<extra></extra>'
+            };
+
+            // Traza 5: Lado recto
+            const traceLadoRecto = {
+                x: [-5, 5],
+                y: [2.5, 2.5],
+                mode: 'lines+markers',
+                name: 'Lado Recto',
+                line: {
+                    color: '#a78bfa',
+                    width: 3
+                },
+                marker: {
+                    color: '#a78bfa',
+                    size: 12
+                },
+                hovertemplate: 'Lado Recto<br>x: %{x}<br>y: 2.5<extra></extra>'
+            };
+
+            // Traza 6: Extremos del lado recto (con etiquetas)
+            const traceExtremosLR = {
+                x: [-5, 5],
+                y: [2.5, 2.5],
+                mode: 'markers+text',
+                name: 'Extremos Lado Recto',
+                marker: {
+                    color: '#c084fc',
+                    size: 12,
+                    symbol: 'circle'
+                },
+                text: ['L₁(-5,2.5)', 'L₂(5,2.5)'],
+                textposition: ['bottom left', 'bottom right'],
+                textfont: {
+                    color: '#c084fc',
+                    size: 12,
+                    family: 'Arial, sans-serif'
+                },
+                hovertemplate: 'Extremo<br>x: %{x}<br>y: 2.5<extra></extra>',
+                showlegend: false
+            };
+
+            // Traza 7: Eje de simetría
+            const traceEjeSimetria = {
+                x: [0, 0],
+                y: [-3, 12],
+                mode: 'lines',
+                name: 'Eje de simetría: x = 0',
+                line: {
+                    color: '#60a5fa',
+                    width: 2,
+                    dash: 'dot'
+                },
+                hovertemplate: 'Eje de simetría<br>x = 0<extra></extra>'
+            };
+
+            // Traza 8: Puntos adicionales calculados
+            const tracePuntosAdicionales = {
+                x: [-10, -5, 0, 5, 10],
+                y: [10, 2.5, 0, 2.5, 10],
+                mode: 'markers',
+                name: 'Puntos calculados',
+                marker: {
+                    color: '#34d399',
+                    size: 10,
+                    symbol: 'circle'
+                },
+                hovertemplate: 'Punto<br>x: %{x}<br>y: %{y}<extra></extra>'
+            };
+
+            const data = [
+                traceParabola,
+                traceVertice,
+                traceFoco,
+                traceDirectriz,
+                traceLadoRecto,
+                traceExtremosLR,
+                traceEjeSimetria,
+                tracePuntosAdicionales
+            ];
+
+            const layout = {
+                title: {
+                    text: 'Gráfica de la Parábola: x² = 10y',
+                    font: {
+                        color: '#00d4ff',
+                        size: 24,
+                        family: 'Arial, sans-serif'
+                    }
+                },
+                xaxis: {
+                    title: {
+                        text: 'Eje X',
+                        font: { color: '#e0e0e0', size: 16 }
+                    },
+                    gridcolor: '#2a2a40',
+                    zerolinecolor: '#4c5fff',
+                    zerolinewidth: 2,
+                    tickfont: { color: '#e0e0e0' },
+                    range: [-12, 12]
+                },
+                yaxis: {
+                    title: {
+                        text: 'Eje Y',
+                        font: { color: '#e0e0e0', size: 16 }
+                    },
+                    gridcolor: '#2a2a40',
+                    zerolinecolor: '#4c5fff',
+                    zerolinewidth: 2,
+                    tickfont: { color: '#e0e0e0' },
+                    range: [-4, 12]
+                },
+                plot_bgcolor: '#0f1729',
+                paper_bgcolor: '#0f1729',
+                hovermode: 'closest',
+                showlegend: true,
+                legend: {
+                    x: 0.02,
+                    y: 0.98,
+                    bgcolor: 'rgba(26, 26, 46, 0.8)',
+                    bordercolor: '#4c5fff',
+                    borderwidth: 1,
+                    font: {
+                        color: '#e0e0e0',
+                        size: 12
+                    }
+                },
+                margin: {
+                    l: 60,
+                    r: 40,
+                    t: 80,
+                    b: 60
+                }
+            };
+
+            const config = {
+                responsive: true,
+                displayModeBar: true,
+                displaylogo: false,
+                modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d'],
+                toImageButtonOptions: {
+                    format: 'png',
+                    filename: 'parabola_x2_10y',
+                    height: 800,
+                    width: 1200,
+                    scale: 2
+                }
+            };
+
+            Plotly.newPlot('graficoParabola', data, layout, config);
+        }
+
+        // Crear los gráficos cuando la página termine de cargar
+        window.addEventListener('load', () => {
+            // Esperar un momento para que MathJax termine de renderizar
+            setTimeout(() => {
+                crearGraficoTeoria();
+                crearGraficoParabola();
+            }, 500);
+        });
+
+        // Recrear los gráficos si se redimensiona la ventana
+        window.addEventListener('resize', () => {
+            Plotly.Plots.resize('graficoTeoria');
+            Plotly.Plots.resize('graficoParabola');
+        });
+    </script>
+</body>
+</html>
+
