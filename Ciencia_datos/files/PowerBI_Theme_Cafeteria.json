@@ -1,0 +1,46 @@
+{
+  "name": "Cafetería — Proyecto Final",
+  "dataColors": [
+    "#6F4E37",
+    "#4E7E95",
+    "#E0A458",
+    "#A67B5B",
+    "#8FB58C",
+    "#8C5E58",
+    "#C8A27C",
+    "#3D6B7D"
+  ],
+  "good": "#5BB97D",
+  "neutral": "#E0A458",
+  "bad": "#D9534F",
+  "maximum": "#6F4E37",
+  "center": "#C8A27C",
+  "minimum": "#F0E6DA",
+  "null": "#CCCCCC",
+  "background": "#FFFFFF",
+  "secondaryBackground": "#F0E6DA",
+  "foreground": "#3D2B1F",
+  "tableAccent": "#6F4E37",
+  "textClasses": {
+    "callout": {
+      "fontSize": 32,
+      "fontFace": "Segoe UI",
+      "color": "#6F4E37"
+    },
+    "title": {
+      "fontSize": 13,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#3D2B1F"
+    },
+    "header": {
+      "fontSize": 11,
+      "fontFace": "Segoe UI Semibold",
+      "color": "#3D2B1F"
+    },
+    "label": {
+      "fontSize": 10,
+      "fontFace": "Segoe UI",
+      "color": "#3D2B1F"
+    }
+  }
+}
