@@ -255,15 +255,21 @@
             <h3>Desarrollo (partimos del lado izquierdo)</h3>
             <div class="paso"><b>Paso 1.</b> Partimos de la igualdad; el lado derecho $\csc x$ permanece fijo:
                 $$1 + \frac{\sen x \cdot \cot^2 x}{1 + \sen x} = \csc x$$</div>
-            <div class="paso"><b>Paso 2.</b> Escribimos $\cot^2 x = \dfrac{\cos^2 x}{\sen^2 x}$ y simplificamos un $\sen x$:
-                $$1 + \frac{\dfrac{\cos^2 x}{\sen x}}{1 + \sen x} = \csc x \;\Longrightarrow\; 1 + \frac{\cos^2 x}{\sen x\,(1 + \sen x)} = \csc x$$</div>
-            <div class="paso"><b>Paso 3.</b> Usamos $\cos^2 x = 1 - \sen^2 x$ y factorizamos por diferencia de cuadrados:
-                $$1 + \frac{1 - \sen^2 x}{\sen x\,(1 + \sen x)} = \csc x \;\Longrightarrow\; 1 + \frac{(1 - \sen x)(1 + \sen x)}{\sen x\,(1 + \sen x)} = \csc x$$</div>
-            <div class="paso"><b>Paso 4.</b> Cancelamos $(1+\sen x)$:
+            <div class="paso"><b>Paso 2.</b> Sustituimos $\cot^2 x = \dfrac{\cos^2 x}{\sen^2 x}$ en el numerador:
+                $$1 + \frac{\sen x \cdot \dfrac{\cos^2 x}{\sen^2 x}}{1 + \sen x} = \csc x$$</div>
+            <div class="paso"><b>Paso 3.</b> Simplificamos el numerador cancelando un $\sen x$: $\;\sen x \cdot \dfrac{\cos^2 x}{\sen^2 x} = \dfrac{\cos^2 x}{\sen x}$:
+                $$1 + \frac{\dfrac{\cos^2 x}{\sen x}}{1 + \sen x} = \csc x$$</div>
+            <div class="paso"><b>Paso 4.</b> Una fracción dividida entre $(1+\sen x)$ pasa ese factor al denominador:
+                $$1 + \frac{\cos^2 x}{\sen x\,(1 + \sen x)} = \csc x$$</div>
+            <div class="paso"><b>Paso 5.</b> Usamos $\cos^2 x = 1 - \sen^2 x$:
+                $$1 + \frac{1 - \sen^2 x}{\sen x\,(1 + \sen x)} = \csc x$$</div>
+            <div class="paso"><b>Paso 6.</b> Factorizamos el numerador por diferencia de cuadrados $1 - \sen^2 x = (1 - \sen x)(1 + \sen x)$:
+                $$1 + \frac{(1 - \sen x)(1 + \sen x)}{\sen x\,(1 + \sen x)} = \csc x$$</div>
+            <div class="paso"><b>Paso 7.</b> Cancelamos $(1+\sen x)$:
                 $$1 + \frac{1 - \sen x}{\sen x} = \csc x$$</div>
-            <div class="paso"><b>Paso 5.</b> Sumamos con común denominador $\sen x$:
-                $$\frac{\sen x + 1 - \sen x}{\sen x} = \csc x \;\Longrightarrow\; \frac{1}{\sen x} = \csc x$$</div>
-            <div class="paso"><b>Paso 6.</b> Ambos lados son iguales:
+            <div class="paso"><b>Paso 8.</b> Sumamos con común denominador $\sen x$:
+                $$\frac{\sen x + (1 - \sen x)}{\sen x} = \csc x \;\Longrightarrow\; \frac{1}{\sen x} = \csc x$$</div>
+            <div class="paso"><b>Paso 9.</b> Ambos lados son iguales:
                 $$\csc x = \csc x \qquad \text{L.q.q.d.} \qquad \blacksquare$$</div>
         </article>
 
@@ -285,13 +291,17 @@
             <h3>Desarrollo (partimos del lado izquierdo)</h3>
             <div class="paso"><b>Paso 1.</b> Partimos de la igualdad; el lado derecho $\dfrac{1+\sen t}{1-\sen t}$ permanece fijo:
                 $$(\sec t + \tan t)^2 = \frac{1 + \sen t}{1 - \sen t}$$</div>
-            <div class="paso"><b>Paso 2.</b> Escribimos $\sec t$ y $\tan t$ con común denominador $\cos t$:
-                $$\left(\frac{1}{\cos t} + \frac{\sen t}{\cos t}\right)^2 = \frac{1 + \sen t}{1 - \sen t} \;\Longrightarrow\; \left(\frac{1 + \sen t}{\cos t}\right)^2 = \frac{1 + \sen t}{1 - \sen t}$$</div>
-            <div class="paso"><b>Paso 3.</b> Desarrollamos el cuadrado del cociente:
+            <div class="paso"><b>Paso 2.</b> Sustituimos $\sec t = \dfrac{1}{\cos t}$ y $\tan t = \dfrac{\sen t}{\cos t}$:
+                $$\left(\frac{1}{\cos t} + \frac{\sen t}{\cos t}\right)^2 = \frac{1 + \sen t}{1 - \sen t}$$</div>
+            <div class="paso"><b>Paso 3.</b> Sumamos las dos fracciones (ya tienen común denominador $\cos t$):
+                $$\left(\frac{1 + \sen t}{\cos t}\right)^2 = \frac{1 + \sen t}{1 - \sen t}$$</div>
+            <div class="paso"><b>Paso 4.</b> Desarrollamos el cuadrado del cociente, $\left(\dfrac{a}{b}\right)^2 = \dfrac{a^2}{b^2}$:
                 $$\frac{(1 + \sen t)^2}{\cos^2 t} = \frac{1 + \sen t}{1 - \sen t}$$</div>
-            <div class="paso"><b>Paso 4.</b> Usamos $\cos^2 t = 1 - \sen^2 t$ y factorizamos por diferencia de cuadrados:
+            <div class="paso"><b>Paso 5.</b> Usamos $\cos^2 t = 1 - \sen^2 t$ en el denominador:
+                $$\frac{(1 + \sen t)^2}{1 - \sen^2 t} = \frac{1 + \sen t}{1 - \sen t}$$</div>
+            <div class="paso"><b>Paso 6.</b> Factorizamos el denominador por diferencia de cuadrados $1 - \sen^2 t = (1 - \sen t)(1 + \sen t)$:
                 $$\frac{(1 + \sen t)^2}{(1 - \sen t)(1 + \sen t)} = \frac{1 + \sen t}{1 - \sen t}$$</div>
-            <div class="paso"><b>Paso 5.</b> Cancelamos un factor $(1 + \sen t)$:
+            <div class="paso"><b>Paso 7.</b> Cancelamos un factor $(1 + \sen t)$ (recordando que $(1+\sen t)^2 = (1+\sen t)(1+\sen t)$):
                 $$\frac{1 + \sen t}{1 - \sen t} = \frac{1 + \sen t}{1 - \sen t} \qquad \text{L.q.q.d.} \qquad \blacksquare$$</div>
         </article>
 
@@ -313,12 +323,18 @@
             <h3>Desarrollo (partimos del lado izquierdo)</h3>
             <div class="paso"><b>Paso 1.</b> Partimos de la igualdad; el lado derecho $2\csc\beta$ permanece fijo:
                 $$\sqrt{\frac{1 - \cos\beta}{1 + \cos\beta}} + \sqrt{\frac{1 + \cos\beta}{1 - \cos\beta}} = 2\csc\beta$$</div>
-            <div class="paso"><b>Paso 2.</b> Racionalizamos cada radical (multiplicando dentro de la raíz por el conjugado) y usamos $1-\cos^2\beta = \sen^2\beta$:
-                $$\frac{1 - \cos\beta}{|\sen\beta|} + \frac{1 + \cos\beta}{|\sen\beta|} = 2\csc\beta$$
-                <span class="verif">Cada raíz da $\sqrt{\dfrac{(1\mp\cos\beta)^2}{\sen^2\beta}} = \dfrac{1\mp\cos\beta}{|\sen\beta|}$; el numerador no lleva valor absoluto porque $1\mp\cos\beta \ge 0$.</span></div>
-            <div class="paso"><b>Paso 3.</b> Sumamos (mismo denominador):
+            <div class="paso"><b>Paso 2.</b> Trabajamos el <b>primer radical</b> aparte. Multiplicamos numerador y denominador (dentro de la raíz) por el conjugado del denominador, $(1 - \cos\beta)$:
+                $$\sqrt{\frac{1 - \cos\beta}{1 + \cos\beta}} = \sqrt{\frac{1 - \cos\beta}{1 + \cos\beta} \cdot \frac{1 - \cos\beta}{1 - \cos\beta}} = \sqrt{\frac{(1 - \cos\beta)^2}{(1 + \cos\beta)(1 - \cos\beta)}}$$
+                El denominador es una diferencia de cuadrados: $(1 + \cos\beta)(1 - \cos\beta) = 1 - \cos^2\beta = \sen^2\beta$. Entonces:
+                $$= \sqrt{\frac{(1 - \cos\beta)^2}{\sen^2\beta}} = \frac{\sqrt{(1 - \cos\beta)^2}}{\sqrt{\sen^2\beta}} = \frac{1 - \cos\beta}{|\sen\beta|}$$
+                <span class="verif">$\sqrt{(1 - \cos\beta)^2} = 1 - \cos\beta$ sin valor absoluto porque $1 - \cos\beta \ge 0$ siempre; en cambio $\sqrt{\sen^2\beta} = |\sen\beta|$.</span></div>
+            <div class="paso"><b>Paso 3.</b> Hacemos lo mismo con el <b>segundo radical</b>, multiplicando ahora por su conjugado $(1 + \cos\beta)$:
+                $$\sqrt{\frac{1 + \cos\beta}{1 - \cos\beta}} = \sqrt{\frac{1 + \cos\beta}{1 - \cos\beta} \cdot \frac{1 + \cos\beta}{1 + \cos\beta}} = \sqrt{\frac{(1 + \cos\beta)^2}{1 - \cos^2\beta}} = \sqrt{\frac{(1 + \cos\beta)^2}{\sen^2\beta}} = \frac{1 + \cos\beta}{|\sen\beta|}$$</div>
+            <div class="paso"><b>Paso 4.</b> Sustituimos ambos resultados en la igualdad de partida:
+                $$\frac{1 - \cos\beta}{|\sen\beta|} + \frac{1 + \cos\beta}{|\sen\beta|} = 2\csc\beta$$</div>
+            <div class="paso"><b>Paso 5.</b> Sumamos (mismo denominador) y reducimos el numerador:
                 $$\frac{(1 - \cos\beta) + (1 + \cos\beta)}{|\sen\beta|} = 2\csc\beta \;\Longrightarrow\; \frac{2}{|\sen\beta|} = 2\csc\beta$$</div>
-            <div class="paso"><b>Paso 4.</b> Para ángulos con $\sen\beta > 0$ (caso del curso), $|\sen\beta| = \sen\beta$:
+            <div class="paso"><b>Paso 6.</b> Para ángulos con $\sen\beta > 0$ (caso del curso), $|\sen\beta| = \sen\beta$:
                 $$\frac{2}{\sen\beta} = 2\csc\beta \;\Longrightarrow\; 2\csc\beta = 2\csc\beta \qquad \text{L.q.q.d.} \qquad \blacksquare$$</div>
 
             <div class="nota"><b>Observación (rigor):</b> el resultado exacto es $\dfrac{2}{|\sen\beta|}$. Coincide con $2\csc\beta$ solo cuando $\sen\beta > 0$; si $\sen\beta < 0$ el lado izquierdo (suma de raíces, siempre positivo) daría $-2\csc\beta$. En el nivel del taller se trabaja con $\sen\beta > 0$, pero conviene saber de dónde sale el valor absoluto.</div>
